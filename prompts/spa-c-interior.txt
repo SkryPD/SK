@@ -1,0 +1,12 @@
+Use case: sketch-to-render
+Asset type: final-presentation-quality photorealistic interior architectural visualization
+Primary request: Convert Image 1 into the male-bath interior perspective of the same fully enclosed Scheme C hot-spring model shown in Image 2. Image 3 is the authoritative floor plan and Image 4 is only the approved Scheme C material and lighting reference.
+Input images: Image 1 is the male-bath perspective geometry-control edit target; Image 2 is the accepted axonometric rendering of the same model; Image 3 is the original plan crop; Image 4 is the approved Scheme C style reference.
+Scene/backdrop: a fully enclosed private boutique hot-spring room, viewed from the west transition threshold looking east toward the restrained green end feature.
+Geometry invariants: preserve Image 1 camera and one-point perspective; exactly one 8180 by 4240 mm rectangular pool centered in the 8680 by 6580 mm male bath with 250 mm side margins and 1170 mm end margins; preserve pool orientation, continuous safe passage, enclosing walls, west threshold, east end wall and conceptual 3.2 m clear height; maintain consistency with Images 2 and 3; complete ceiling present; fully enclosed with no open sky.
+Style/medium: photorealistic professional interior visualization; bright youthful modern-natural boutique spa; 30% quiet natural and 70% bright contemporary.
+Materials/textures: pale warm matte anti-slip stone; pale rounded pool coping; honey-oak moisture-safe linear ceiling; warm-white mineral plaster; controlled sage-green tactile end wall; repeated but not excessive opal globe wet-area wall lights; discreet drainage channel; one restrained planted end feature.
+Lighting/mood: bright clean ambient illumination plus approximately 3200K warm architectural lighting; balanced exposure; mild realistic steam that never obscures geometry; no harsh hospital glare or strong water reflections.
+Safety cues: non-slip matte surfaces, rounded coping, visible clear passage, discreet handrail, protected wet-area fixtures and readable drainage edge.
+Constraints: change finishes, lighting and photographic realism only; do not move or reshape the pool, walls, threshold, passage, ceiling or end feature; no extra pools; no people; no text, labels, logos or watermark.
+Avoid: outdoor pool, exposed sky, open courtyard, multiple pools, swimming-lane markings, neon, black-and-gold graphics, purple flowers, celebrity portraits, glossy floor, nightclub mood or commercial bathhouse appearance.
