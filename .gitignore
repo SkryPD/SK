@@ -1,0 +1,6 @@
+.superpowers/
+.worktrees/
+tmp/
+__pycache__/
+*.pyc
+output/imagegen/
