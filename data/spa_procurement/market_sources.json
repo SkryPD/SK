@@ -7,11 +7,11 @@
     "unit": "m²",
     "priceLow": 150,
     "priceHigh": 260,
-    "sourceUrl": "https://www.viewgres.com/",
+    "sourceUrl": "https://bk.taobao.com/k/PCzhuan_3788/dbf1c3b70416ac8d41ee27b3ed4a7f3e.html",
     "checkedOn": "2026-08-30",
-    "priceBasis": "佛山品牌官网用于品牌与厚砖能力核实；价格为广东专用小规格砖预算询价区间，不含加工、运费、税、辅料和铺贴",
+    "priceBasis": "公开市场文章给出唯格石英砖约120–280元/㎡的综合落地区间；本行取150–260元/㎡作为专用小规格砖预算询价区间，不含加工、运费、税、辅料和铺贴；品牌与吸水率能力另由唯格产品目录核实",
     "regionNote": "佛山厂家，清远/英德项目可向佛山渠道询价补货",
-    "limitations": "官网未公开本项目专用规格成交价，必须索取样板、吸水率和湿态防滑报告后正式询价"
+    "limitations": "公开页不是本项目150×150专用规格的正式报价，必须索取样板、吸水率、湿态防滑报告和书面询价单"
   },
   {
     "category": "pool_floor_tile",
@@ -63,11 +63,11 @@
     "unit": "m²",
     "priceLow": 220,
     "priceHigh": 380,
-    "sourceUrl": "https://www.viewgres.com/",
+    "sourceUrl": "https://bk.taobao.com/k/PCzhuan_3788/dbf1c3b70416ac8d41ee27b3ed4a7f3e.html",
     "checkedOn": "2026-08-30",
-    "priceBasis": "佛山厚砖/石英砖品牌能力页；价格含常规倒圆加工预算，不含复杂异形、运税、辅料和安装",
+    "priceBasis": "公开市场文章给出唯格石英砖约120–280元/㎡综合落地区间；本行在此基础上加入常规倒圆加工暂估，形成220–380元/㎡预算区间，不含复杂异形、运税、辅料和安装",
     "regionNote": "佛山厂家便于加工深化和补货",
-    "limitations": "必须由厂家根据池沿节点另报加工费，不能按普通整砖直接下单"
+    "limitations": "公开页不是池沿加工成交页，必须由厂家按池沿节点另报加工费，不能按普通整砖直接下单"
   },
   {
     "category": "pool_coping_tile",
@@ -147,11 +147,11 @@
     "unit": "m²",
     "priceLow": 260,
     "priceHigh": 480,
-    "sourceUrl": "https://www.viewgres.com/",
+    "sourceUrl": "https://www.kinpan.com/company/productlist/20181105111501655784848d39d56cc?ft=7006774232959243",
     "checkedOn": "2026-08-30",
-    "priceBasis": "佛山定制厚砖/肌理砖品牌能力与定制加工预算区间，不含运税辅料铺贴",
+    "priceBasis": "公开产品展示页用于核实唯格产品与材料能力；260–480元/㎡为浅浮雕/肌理砖定制加工预算区间，不含运税辅料铺贴，最终须厂家书面报价",
     "regionNote": "佛山定制样板后送英德确认",
-    "limitations": "肌理深度、模具、最小起订量会显著影响价格"
+    "limitations": "产品展示页未公开本项目肌理砖成交价；肌理深度、模具和最小起订量会显著影响价格"
   },
   {
     "category": "feature_tile",
