@@ -38,6 +38,50 @@ class SpaGeometryTests(unittest.TestCase):
     def test_model_validation_has_no_errors(self):
         self.assertEqual(validate_model(self.model), [])
 
+    def test_one_four_seat_group_per_support_zone(self):
+        self.assertEqual(self.model["male_table"].center, (3400, 1350))
+        self.assertEqual(self.model["female_table"].center, (3400, 11950))
+        self.assertEqual(len(self.model["male_chairs"]), 4)
+        self.assertEqual(len(self.model["female_chairs"]), 4)
+
+    def test_storage_follows_confirmed_outer_walls(self):
+        male = self.model["male_storage"]
+        female = self.model["female_storage"]
+        self.assertEqual(male.y, self.model["male_support"].y + 140)
+        self.assertEqual(female.bottom, self.model["female_support"].bottom - 140)
+        self.assertEqual(male.size, (1500, 520))
+        self.assertEqual(female.size, (1500, 520))
+
+    def test_storage_and_seating_keep_main_routes_clear(self):
+        for zone in ("male", "female"):
+            route = self.model[f"{zone}_main_route"]
+            self.assertFalse(route.intersects(self.model[f"{zone}_storage"]))
+            self.assertFalse(route.intersects(self.model[f"{zone}_storage_clearance"]))
+            self.assertFalse(route.intersects(self.model[f"{zone}_table"].bounds))
+            for chair in self.model[f"{zone}_chairs"]:
+                self.assertFalse(route.intersects(chair))
+
+    def test_glass_partition_frames_physical_door(self):
+        for zone in ("male", "female"):
+            north = self.model[f"{zone}_glass_north"]
+            door = self.model[f"{zone}_bath_door"]
+            south = self.model[f"{zone}_glass_south"]
+            self.assertEqual(north.bottom, door.y)
+            self.assertEqual(south.y, door.bottom)
+            self.assertEqual(north.x, 4898)
+            self.assertEqual(south.x, 4898)
+            self.assertEqual(north.width, 140)
+            self.assertEqual(south.width, 140)
+
+    def test_model_contains_no_bench(self):
+        self.assertFalse(any("bench" in name for name in self.model))
+
+    def test_confirmed_furniture_clearance_is_preserved(self):
+        for zone in ("male", "female"):
+            storage = self.model[f"{zone}_storage"]
+            leftmost_chair = min(chair.x for chair in self.model[f"{zone}_chairs"])
+            self.assertGreaterEqual(leftmost_chair - storage.right, 800)
+
 
 if __name__ == "__main__":
     unittest.main()
