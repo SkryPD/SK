@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image
 
 from src.spa3d.geometry import build_model
-from src.spa3d.render_guides import render_axonometric, render_interior
+from src.spa3d.render_guides import _iso, render_axonometric, render_interior
 
 
 class SpaGuideTests(unittest.TestCase):
@@ -35,6 +35,27 @@ class SpaGuideTests(unittest.TestCase):
                     colors = image.getcolors(maxcolors=image.width * image.height)
                     self.assertIsNotNone(colors)
                     self.assertGreater(len(colors), 8)
+
+    def test_axonometric_furniture_symbols_are_high_contrast(self):
+        model = build_model()
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder) / "axon.png"
+            render_axonometric(model, output)
+            with Image.open(output) as image:
+                for zone in ("male", "female"):
+                    table = model[f"{zone}_table"]
+                    table_center = tuple(round(value) for value in _iso(table.x, table.y, 740))
+                    self.assertEqual(image.getpixel(table_center), (166, 151, 136))
+                    for chair in model[f"{zone}_chairs"]:
+                        chair_center = tuple(
+                            round(value)
+                            for value in _iso(
+                                chair.x + chair.width / 2,
+                                chair.y + chair.height / 2,
+                                460,
+                            )
+                        )
+                        self.assertEqual(image.getpixel(chair_center), (239, 236, 229))
 
 
 if __name__ == "__main__":

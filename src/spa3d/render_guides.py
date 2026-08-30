@@ -14,6 +14,8 @@ STONE = (216, 218, 215)
 WATER = (164, 201, 207)
 GREEN = (126, 145, 126)
 WOOD = (196, 191, 181)
+TABLE_GUIDE = (166, 151, 136)
+CHAIR_GUIDE = (239, 236, 229)
 GLASS = (190, 218, 224)
 LIGHT_4000K = (245, 247, 242)
 
@@ -78,16 +80,16 @@ def _draw_furniture_iso(draw, model, zone):
     table = model[f"{zone}_table"]
     draw.ellipse(
         _ellipse_for_circle(table, 740),
-        fill=WOOD,
+        fill=TABLE_GUIDE,
         outline=INK,
-        width=3,
+        width=5,
     )
     for chair in model[f"{zone}_chairs"]:
         draw.polygon(
             _rect_poly(chair, 460),
-            fill=(205, 207, 201),
+            fill=CHAIR_GUIDE,
             outline=INK,
-            width=2,
+            width=4,
         )
 
 
@@ -153,8 +155,8 @@ def render_axonometric(model, output_path):
             draw.line([top[i], top[j]], fill=INK, width=3)
 
     for zone in ("male", "female"):
-        _draw_furniture_iso(draw, model, zone)
         _draw_partition_iso(draw, model, zone)
+        _draw_furniture_iso(draw, model, zone)
 
     # Door markers use the same model entries as the interior camera logic.
     for name in ("male_entry", "female_entry", "male_bath_door", "female_bath_door"):

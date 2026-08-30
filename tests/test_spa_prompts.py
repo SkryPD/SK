@@ -25,6 +25,11 @@ class SpaPromptTests(unittest.TestCase):
             "no water curtain",
         ):
             self.assertIn(required, text)
+        self.assertIn("Image 1 is the sole furniture-layout authority", text)
+        self.assertIn("Image 1 is the sole geometry authority", text)
+        self.assertIn("Image 2 is style-only", text)
+        self.assertNotIn("layout annotation", text)
+        self.assertNotIn("legacy furniture symbols", text)
 
     def test_interior_a_prompt_locks_confirmed_finish_package(self):
         text = self.read("spa-bright-natural-interior-a.txt")
