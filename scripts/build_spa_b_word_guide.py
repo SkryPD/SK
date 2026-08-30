@@ -474,9 +474,87 @@ def _add_bullets(doc, items: list[str]):
 
 
 def _add_numbered(doc, items: list[str]):
+    num_id = _create_decimal_numbering(doc)
     for item in items:
         p = doc.add_paragraph(style="List Number")
+        num_pr = p._p.get_or_add_pPr().get_or_add_numPr()
+        num_pr.get_or_add_ilvl().val = 0
+        num_pr.get_or_add_numId().val = num_id
         _set_run_font(p.add_run(item), size=9.5, color=INK)
+
+
+def _create_decimal_numbering(doc: Document) -> int:
+    """Create a dedicated decimal list that always starts from 1."""
+
+    numbering = doc.part.numbering_part.element
+    abstract_ids = [
+        int(node.get(qn("w:abstractNumId")))
+        for node in numbering.findall(qn("w:abstractNum"))
+    ]
+    num_ids = [
+        int(node.get(qn("w:numId")))
+        for node in numbering.findall(qn("w:num"))
+    ]
+    abstract_id = max(abstract_ids, default=0) + 1
+    num_id = max(num_ids, default=0) + 1
+
+    abstract = OxmlElement("w:abstractNum")
+    abstract.set(qn("w:abstractNumId"), str(abstract_id))
+    multi = OxmlElement("w:multiLevelType")
+    multi.set(qn("w:val"), "singleLevel")
+    abstract.append(multi)
+    level = OxmlElement("w:lvl")
+    level.set(qn("w:ilvl"), "0")
+    start = OxmlElement("w:start")
+    start.set(qn("w:val"), "1")
+    level.append(start)
+    num_fmt = OxmlElement("w:numFmt")
+    num_fmt.set(qn("w:val"), "decimal")
+    level.append(num_fmt)
+    lvl_text = OxmlElement("w:lvlText")
+    lvl_text.set(qn("w:val"), "%1.")
+    level.append(lvl_text)
+    lvl_jc = OxmlElement("w:lvlJc")
+    lvl_jc.set(qn("w:val"), "left")
+    level.append(lvl_jc)
+    p_pr = OxmlElement("w:pPr")
+    tabs = OxmlElement("w:tabs")
+    tab = OxmlElement("w:tab")
+    tab.set(qn("w:val"), "num")
+    tab.set(qn("w:pos"), "540")
+    tabs.append(tab)
+    p_pr.append(tabs)
+    ind = OxmlElement("w:ind")
+    ind.set(qn("w:left"), "540")
+    ind.set(qn("w:hanging"), "280")
+    p_pr.append(ind)
+    spacing = OxmlElement("w:spacing")
+    spacing.set(qn("w:after"), "80")
+    spacing.set(qn("w:line"), "280")
+    spacing.set(qn("w:lineRule"), "auto")
+    p_pr.append(spacing)
+    level.append(p_pr)
+    r_pr = OxmlElement("w:rPr")
+    r_fonts = OxmlElement("w:rFonts")
+    r_fonts.set(qn("w:ascii"), FONT_FALLBACK)
+    r_fonts.set(qn("w:hAnsi"), FONT_FALLBACK)
+    r_fonts.set(qn("w:eastAsia"), FONT_NAME)
+    r_pr.append(r_fonts)
+    level.append(r_pr)
+    abstract.append(level)
+
+    first_num = numbering.find(qn("w:num"))
+    if first_num is None:
+        numbering.append(abstract)
+    else:
+        first_num.addprevious(abstract)
+    num = OxmlElement("w:num")
+    num.set(qn("w:numId"), str(num_id))
+    abstract_ref = OxmlElement("w:abstractNumId")
+    abstract_ref.set(qn("w:val"), str(abstract_id))
+    num.append(abstract_ref)
+    numbering.append(num)
+    return num_id
 
 
 def _add_heading(doc, text: str, level: int = 1):
@@ -558,6 +636,10 @@ def configure_styles(doc: Document):
     title.font.color.rgb = _hex(ACCENT_DARK)
     title.paragraph_format.space_before = Pt(0)
     title.paragraph_format.space_after = Pt(8)
+    title_ppr = title._element.get_or_add_pPr()
+    title_border = title_ppr.find(qn("w:pBdr"))
+    if title_border is not None:
+        title_ppr.remove(title_border)
 
     subtitle = doc.styles["Subtitle"]
     subtitle.font.name = FONT_NAME
@@ -719,7 +801,6 @@ def add_design_basis(doc: Document, model: dict):
 
 
 def add_quick_reference(doc: Document, model: dict):
-    _page_break(doc)
     _add_heading(doc, "2  一页式选材速查", 1)
     rows = [
         ["瓷砖", "浅冷灰米白哑光瓷质砖；池底/坐台 150×150，池壁 300×600，地面 600×600，墙面 600×1200", "对应型号湿态防滑资料；建议吸水率≤0.5%；锁批次"],
@@ -744,7 +825,6 @@ def add_quick_reference(doc: Document, model: dict):
 
 
 def add_tile_section(doc: Document, model: dict):
-    _page_break(doc)
     _add_heading(doc, "3  瓷砖选择、性能和铺装要求", 1)
     _add_body(
         doc,
@@ -789,7 +869,6 @@ def add_tile_section(doc: Document, model: dict):
 
 
 def add_ceiling_section(doc: Document, model: dict):
-    _page_break(doc)
     _add_heading(doc, "4  天花系统选择、构造和检修要求", 1)
     rows = [
         [r["tier"], r["system"], r["module"], r["finish"], r["requirements"]]
@@ -835,7 +914,6 @@ def add_ceiling_section(doc: Document, model: dict):
 
 
 def add_glass_section(doc: Document, model: dict):
-    _page_break(doc)
     _add_heading(doc, "5  通高玻璃隔断构造深化建议", 1)
     _add_callout(
         doc,
@@ -879,7 +957,6 @@ def add_glass_section(doc: Document, model: dict):
 
 
 def add_lighting_section(doc: Document, model: dict):
-    _page_break(doc)
     _add_heading(doc, "6  灯具选择指南：4000K 选择与布置", 1)
     rows = [
         [r["type"], r["use"], r["power"], r["cct"], r["quality"], r["protection"]]
@@ -925,7 +1002,6 @@ def add_lighting_section(doc: Document, model: dict):
 
 
 def add_sample_and_inquiry_section(doc: Document):
-    _page_break(doc)
     _add_heading(doc, "7  现场样板、询价和材料送审", 1)
     _add_heading(doc, "7.1  样板确认流程", 2)
     _add_numbered(doc, SAMPLE_CHECKLIST)
@@ -952,7 +1028,6 @@ def add_sample_and_inquiry_section(doc: Document):
 
 
 def add_acceptance_section(doc: Document):
-    _page_break(doc)
     _add_heading(doc, "8  施工验收检查表", 1)
     _add_body(
         doc,
@@ -965,7 +1040,6 @@ def add_acceptance_section(doc: Document):
 
 
 def add_boundary_section(doc: Document, model: dict):
-    _page_break(doc)
     _add_heading(doc, "9  专业边界与风险提示", 1)
     rows = [
         ["本指南已覆盖", "瓷砖、铝制天花、玻璃隔断设计方向和灯具选择；样板、询价、送审与饰面验收。"],
@@ -991,7 +1065,6 @@ def add_boundary_section(doc: Document, model: dict):
 
 
 def add_appendix(doc: Document):
-    _page_break(doc)
     _add_heading(doc, "10  参考附录：品牌与价格的使用规则", 1)
     _add_callout(
         doc,

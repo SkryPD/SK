@@ -3,6 +3,7 @@ import sys
 import unittest
 
 from docx import Document
+from docx.oxml.ns import qn
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,6 +90,38 @@ class DocumentBuildTests(unittest.TestCase):
             self.assertIn(term, all_text)
         self.assertGreaterEqual(len(doc.tables), 10)
         self.assertGreaterEqual(len(doc.sections), 1)
+        hard_page_breaks = doc._element.xpath(".//w:br[@w:type='page']")
+        self.assertEqual(
+            len(hard_page_breaks),
+            1,
+            "Only the cover should force a hard page break; body sections must flow naturally.",
+        )
+        title_ppr = doc.styles["Title"]._element.get_or_add_pPr()
+        self.assertIsNone(
+            title_ppr.find(qn("w:pBdr")),
+            "The cover title must not inherit Word's default blue border.",
+        )
+
+        numbered_starts = [
+            "机电提供新风",
+            "核对样品标签",
+        ]
+        num_ids = []
+        for start in numbered_starts:
+            paragraph = next(p for p in doc.paragraphs if p.text.startswith(start))
+            num_ids.append(int(paragraph._p.pPr.numPr.numId.val))
+        self.assertEqual(len(set(num_ids)), len(num_ids))
+        numbering = doc.part.numbering_part.element
+        for num_id in num_ids:
+            abstract_id = int(
+                numbering.xpath(
+                    f"./w:num[@w:numId='{num_id}']/w:abstractNumId"
+                )[0].get(qn("w:val"))
+            )
+            start = numbering.xpath(
+                f"./w:abstractNum[@w:abstractNumId='{abstract_id}']/w:lvl[@w:ilvl='0']/w:start"
+            )[0]
+            self.assertEqual(start.get(qn("w:val")), "1")
 
 
 if __name__ == "__main__":
