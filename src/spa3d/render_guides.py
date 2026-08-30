@@ -7,13 +7,15 @@ from .geometry import CEILING_HEIGHT, WALL_HEIGHT_CUTAWAY
 
 
 CANVAS = (2048, 1152)
-BG = (244, 241, 234)
-INK = (48, 48, 45)
-WALL = (221, 216, 205)
-STONE = (208, 202, 191)
-WATER = (125, 182, 184)
-GREEN = (100, 137, 92)
-WOOD = (174, 132, 91)
+BG = (242, 243, 241)
+INK = (49, 52, 50)
+WALL = (226, 227, 223)
+STONE = (216, 218, 215)
+WATER = (164, 201, 207)
+GREEN = (126, 145, 126)
+WOOD = (196, 191, 181)
+GLASS = (190, 218, 224)
+LIGHT_4000K = (245, 247, 242)
 
 
 def _font(size=30):
@@ -55,6 +57,53 @@ def _draw_iso_box(draw, rect, height, top_fill, side_fill):
             width=2,
         )
     draw.polygon(top, fill=top_fill, outline=INK, width=3)
+
+
+def _ellipse_for_circle(circle, z=0):
+    left = _iso(circle.x - circle.radius, circle.y, z)
+    right = _iso(circle.x + circle.radius, circle.y, z)
+    top = _iso(circle.x, circle.y - circle.radius, z)
+    bottom = _iso(circle.x, circle.y + circle.radius, z)
+    return (
+        min(left[0], right[0], top[0], bottom[0]),
+        min(left[1], right[1], top[1], bottom[1]),
+        max(left[0], right[0], top[0], bottom[0]),
+        max(left[1], right[1], top[1], bottom[1]),
+    )
+
+
+def _draw_furniture_iso(draw, model, zone):
+    storage = model[f"{zone}_storage"]
+    _draw_iso_box(draw, storage, 1900, WOOD, (173, 170, 162))
+    table = model[f"{zone}_table"]
+    draw.ellipse(
+        _ellipse_for_circle(table, 740),
+        fill=WOOD,
+        outline=INK,
+        width=3,
+    )
+    for chair in model[f"{zone}_chairs"]:
+        draw.polygon(
+            _rect_poly(chair, 460),
+            fill=(205, 207, 201),
+            outline=INK,
+            width=2,
+        )
+
+
+def _draw_partition_iso(draw, model, zone):
+    for suffix in ("glass_north", "glass_south"):
+        panel = model[f"{zone}_{suffix}"]
+        base = _rect_poly(panel, 0)
+        top = _rect_poly(panel, CEILING_HEIGHT)
+        draw.polygon(
+            [base[0], base[3], top[3], top[0]],
+            fill=GLASS,
+            outline=INK,
+            width=2,
+        )
+    door = model[f"{zone}_bath_door"]
+    _draw_iso_box(draw, door, 2200, (210, 211, 205), (184, 185, 180))
 
 
 def render_axonometric(model, output_path):
@@ -103,6 +152,10 @@ def render_axonometric(model, output_path):
             draw.line([base[i], top[i]], fill=INK, width=3)
             draw.line([top[i], top[j]], fill=INK, width=3)
 
+    for zone in ("male", "female"):
+        _draw_furniture_iso(draw, model, zone)
+        _draw_partition_iso(draw, model, zone)
+
     # Door markers use the same model entries as the interior camera logic.
     for name in ("male_entry", "female_entry", "male_bath_door", "female_bath_door"):
         opening = model[name]
@@ -140,12 +193,12 @@ def render_axonometric(model, output_path):
             stroke_fill=BG,
         )
 
-    draw.text((72, 62), "汤泉完整区域｜拆顶轴测几何控制图", font=_font(38), fill=INK)
+    draw.text((72, 62), "汤泉完整区域｜新版拆顶轴测几何控制图", font=_font(38), fill=INK)
     draw.text(
         (74, 116),
-        "同一毫米制母版 · 橙点为入口/门洞 · 墙高仅作拆顶表达",
+        "同一毫米制母版 · 外墙单组四人桌椅/储物柜 · 通高玻璃＋实体门",
         font=_font(22),
-        fill=(86, 82, 75),
+        fill=(86, 89, 86),
     )
     draw.rounded_rectangle((72, 1010, 815, 1088), radius=18, fill=(252, 249, 242), outline=(185, 178, 165), width=2)
     draw.text(
@@ -183,15 +236,16 @@ def _camera_project(point, camera, target, focal=1050):
 
 
 def render_interior(model, output_path):
-    image = Image.new("RGB", CANVAS, (234, 229, 219))
+    image = Image.new("RGB", CANVAS, BG)
     draw = ImageDraw.Draw(image)
-    camera = (4050, 3290, 1600)
-    target = (11000, 3290, 1150)
+    camera = (-900, 3290, 1600)
+    target = (8800, 2700, 1200)
     project = lambda point: _camera_project(point, camera, target)
+    support = model["male_support"]
     bath = model["male_bath"]
     pool = model["male_pool"]
 
-    near_x = bath.x
+    near_x = support.x
     far_x = bath.right
     north_y = bath.y
     south_y = bath.bottom
@@ -227,17 +281,17 @@ def render_interior(model, output_path):
         (near_x, south_y, 0),
     ]
 
-    draw.polygon([project(point) for point in far_wall], fill=(204, 216, 194), outline=INK)
-    draw.polygon([project(point) for point in ceiling], fill=(188, 151, 111), outline=INK)
-    draw.polygon([project(point) for point in north_wall], fill=(225, 220, 210), outline=INK)
-    draw.polygon([project(point) for point in south_wall], fill=(218, 214, 205), outline=INK)
+    draw.polygon([project(point) for point in far_wall], fill=WALL, outline=INK)
+    draw.polygon([project(point) for point in ceiling], fill=WOOD, outline=INK)
+    draw.polygon([project(point) for point in north_wall], fill=WALL, outline=INK)
+    draw.polygon([project(point) for point in south_wall], fill=(219, 221, 217), outline=INK)
     draw.polygon([project(point) for point in floor], fill=STONE, outline=INK)
 
     # Ceiling slats are architectural cues; their endpoints use the same shell.
     for y in range(250, 6580, 420):
         draw.line(
             [project((near_x, y, CEILING_HEIGHT - 15)), project((far_x, y, CEILING_HEIGHT - 15))],
-            fill=(116, 87, 61),
+            fill=(143, 140, 133),
             width=3,
         )
 
@@ -259,35 +313,122 @@ def render_interior(model, output_path):
             width=3,
         )
 
-    # Wet-area globe lights and restrained end planting express Scheme C.
-    for x in (6800, 8900, 11000, 12800):
-        center = project((x, north_y + 15, 2050))
-        radius = max(8, int(34 - (x - near_x) / 420))
-        draw.ellipse(
-            (center[0] - radius, center[1] - radius, center[0] + radius, center[1] + radius),
-            fill=(255, 245, 211),
-            outline=(104, 93, 73),
+    storage = model["male_storage"]
+    storage_face = [
+        (storage.x, storage.bottom, 0),
+        (storage.right, storage.bottom, 0),
+        (storage.right, storage.bottom, 1900),
+        (storage.x, storage.bottom, 1900),
+    ]
+    draw.polygon(
+        [project(point) for point in storage_face],
+        fill=WOOD,
+        outline=INK,
+        width=3,
+    )
+
+    table = model["male_table"]
+    table_center = project((table.x, table.y, 740))
+    draw.ellipse(
+        (
+            table_center[0] - 70,
+            table_center[1] - 30,
+            table_center[0] + 70,
+            table_center[1] + 30,
+        ),
+        fill=WOOD,
+        outline=INK,
+        width=3,
+    )
+    for chair in model["male_chairs"]:
+        draw.polygon(
+            [
+                project(point)
+                for point in (
+                    (chair.x, chair.y, 460),
+                    (chair.right, chair.y, 460),
+                    (chair.right, chair.bottom, 460),
+                    (chair.x, chair.bottom, 460),
+                )
+            ],
+            fill=(205, 207, 201),
+            outline=INK,
             width=2,
         )
-    planter = [
-        (far_x - 120, 2500, 0),
-        (far_x - 120, 4080, 0),
-        (far_x - 120, 4080, 820),
-        (far_x - 120, 2500, 820),
+
+    for suffix in ("glass_north", "glass_south"):
+        panel = model[f"male_{suffix}"]
+        polygon = [
+            (panel.x, panel.y, 0),
+            (panel.x, panel.bottom, 0),
+            (panel.x, panel.bottom, CEILING_HEIGHT),
+            (panel.x, panel.y, CEILING_HEIGHT),
+        ]
+        draw.line(
+            [project(point) for point in polygon + [polygon[0]]],
+            fill=(112, 154, 164),
+            width=4,
+        )
+
+    # Confirmed lighting option A: a restrained run of same-size 4000K globes.
+    for x in (7600, 10100, 12600):
+        center = project((x, north_y + 15, 2050))
+        radius = 15
+        draw.ellipse(
+            (
+                center[0] - radius,
+                center[1] - radius,
+                center[0] + radius,
+                center[1] + radius,
+            ),
+            fill=LIGHT_4000K,
+            outline=(116, 119, 114),
+            width=2,
+        )
+
+    # Neutral shallow-relief end wall with 4000K washing and one plant placeholder.
+    relief_x = far_x - 35
+    for y in range(800, 5600, 360):
+        draw.line(
+            [
+                project((relief_x, y, 450)),
+                project((relief_x, y + 220, 2400)),
+            ],
+            fill=(202, 204, 200),
+            width=2,
+        )
+    draw.line(
+        [
+            project((far_x - 20, north_y + 300, 2800)),
+            project((far_x - 20, south_y - 300, 2800)),
+        ],
+        fill=LIGHT_4000K,
+        width=8,
+    )
+    plant_pot = [
+        (far_x - 120, 4880, 0),
+        (far_x - 120, 5480, 0),
+        (far_x - 120, 5480, 700),
+        (far_x - 120, 4880, 700),
     ]
-    draw.polygon([project(point) for point in planter], fill=GREEN, outline=INK, width=3)
+    draw.polygon(
+        [project(point) for point in plant_pot],
+        fill=GREEN,
+        outline=INK,
+        width=3,
+    )
 
     draw.rounded_rectangle((48, 40, 765, 145), radius=18, fill=(250, 247, 240), outline=(184, 176, 162), width=2)
     draw.text((72, 58), "男汤｜同模型室内透视控制图", font=_font(30), fill=INK)
     draw.text(
         (72, 103),
-        "西侧入口向东 · 全室内封闭 · 净高暂定 3.2 m",
+        "男汤过渡区向东 · 全室内封闭 · 净高暂定 3.2 m",
         font=_font(19),
         fill=(82, 78, 72),
     )
     draw.text(
         (72, 1083),
-        "浅暖防滑石材｜木纹线性顶｜浅绿端景｜池体 8180 × 4240 mm",
+        "浅冷灰米白防滑面｜浅灰白橡木｜全 4000K｜灰绿约 10%｜无水帘",
         font=_font(21),
         fill=INK,
     )

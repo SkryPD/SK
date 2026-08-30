@@ -16,8 +16,14 @@ def main():
     if errors:
         raise SystemExit("; ".join(errors))
     output_folder = PROJECT_ROOT / "output" / "3d"
-    render_axonometric(model, output_folder / "spa-c-axonometric-guide.png")
-    render_interior(model, output_folder / "spa-c-interior-guide.png")
+    render_axonometric(
+        model,
+        output_folder / "spa-bright-natural-axonometric-guide.png",
+    )
+    render_interior(
+        model,
+        output_folder / "spa-bright-natural-interior-guide.png",
+    )
 
 
 if __name__ == "__main__":
