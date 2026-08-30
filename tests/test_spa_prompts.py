@@ -48,6 +48,7 @@ class SpaPromptTests(unittest.TestCase):
         self.assertIn("Image 1 is the sole camera and visible-geometry authority", text)
         self.assertIn("Image 2 is the accepted revised axonometric", text)
         self.assertIn("Image 3 is style-only", text)
+        self.assertIn("held open at 90 degrees with a narrow side profile", text)
         self.assertNotIn("Image 4", text)
         self.assertNotIn("authoritative floor plan", text)
 

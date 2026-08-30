@@ -17,6 +17,7 @@ WOOD = (196, 191, 181)
 TABLE_GUIDE = (166, 151, 136)
 CHAIR_GUIDE = (239, 236, 229)
 GLASS = (190, 218, 224)
+SOLID_DOOR = (210, 211, 205)
 LIGHT_4000K = (245, 247, 242)
 
 
@@ -371,6 +372,21 @@ def render_interior(model, output_path):
             fill=(112, 154, 164),
             width=4,
         )
+
+    # The moisture-resistant solid door is shown held open against the north
+    # fixed-glass panel, preserving both the passage and the furniture sightline.
+    open_door = [
+        (4898, 2550, 0),
+        (6378, 2550, 0),
+        (6378, 2550, 2200),
+        (4898, 2550, 2200),
+    ]
+    draw.polygon(
+        [project(point) for point in open_door],
+        fill=SOLID_DOOR,
+        outline=INK,
+        width=4,
+    )
 
     # Confirmed lighting option A: a restrained run of same-size 4000K globes.
     for x in (7600, 10100, 12600):
