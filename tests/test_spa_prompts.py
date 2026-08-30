@@ -45,6 +45,11 @@ class SpaPromptTests(unittest.TestCase):
             "no warm-yellow layer",
         ):
             self.assertIn(required, text)
+        self.assertIn("Image 1 is the sole camera and visible-geometry authority", text)
+        self.assertIn("Image 2 is the accepted revised axonometric", text)
+        self.assertIn("Image 3 is style-only", text)
+        self.assertNotIn("Image 4", text)
+        self.assertNotIn("authoritative floor plan", text)
 
     def test_fixture_b_prompt_changes_only_lighting_system(self):
         text = self.read("spa-bright-natural-fixture-b.txt")
