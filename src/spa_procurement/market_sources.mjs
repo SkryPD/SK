@@ -49,7 +49,12 @@ export function validateMarketSources(records, categoryUnits, asOfDate) {
       }
     }
     if (!allowedTiers.has(record.tier)) errors.push(`${prefix}: invalid tier`);
-    if (!(record.priceLow > 0 && record.priceHigh >= record.priceLow)) {
+    const explicitlyExcluded =
+      record.included === false && record.priceLow === 0 && record.priceHigh === 0;
+    if (
+      !explicitlyExcluded &&
+      !(record.priceLow > 0 && record.priceHigh >= record.priceLow)
+    ) {
       errors.push(`${prefix}: invalid price range`);
     }
     if (!/^https:\/\//.test(record.sourceUrl ?? "")) {
