@@ -1,0 +1,7 @@
+Use case: precise-object-edit
+Asset type: backup interior lighting variant B
+Primary request: Starting from Image 1, remove only the opal globe wall lights and their bases, restore seamless neutral wall finish, and add a restrained aligned row of small trimless recessed wet-area downlights to the ceiling while retaining the existing concealed linear lighting.
+Lighting: keep every source at approximately 4000K with the same exposure, softness, glare control and water reflection level as Image 1.
+Invariants: keep every other pixel-space relationship unchanged, including camera, pool, walls, ceiling geometry, pale cool gray-beige finishes, pale gray-white oak, gray-green accessories, plant, shallow relief end wall, furniture, storage, glass partition, physical door, drainage and clear route.
+Constraints: no other material, color, geometry, furniture or decorative changes; no new pendant or track lights; no people, text, logo or watermark.
+Avoid: visible globe lights, oversized downlights, black fixtures, excessive spotlights, warm-yellow light and cold-blue swimming-pool light.
