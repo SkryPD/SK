@@ -34,14 +34,24 @@ test("buildPackage creates a fully offline responsive Three.js viewer", async (t
   assert.match(app, /V01-R1/);
   assert.match(app, /V02-R1/);
   assert.match(app, /Raycaster/);
+  assert.match(app, /function isObjectVisibleInHierarchy\(object\)/);
+  assert.match(app, /item\.object\.userData\.id && isObjectVisibleInHierarchy\(item\.object\)/);
+  assert.match(app, /Object\.hasOwn\(LAYER_LABELS, object\.name\)/);
+  assert.match(app, /dataset\.viewerReady = "true"/);
+  assert.doesNotMatch(app, /PCFSoftShadowMap/);
   assert.match(css, /@media \(max-width: 720px\)/);
   assert.match(css, /\.panel-collapsed/);
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*?\.control-panel \{[\s\S]*?overflow-y: auto;/);
 
   assert.doesNotMatch(`${html}\n${css}\n${app}`, /https?:\/\//);
   const requiredVendorFiles = [
+    "camera.mjs",
     "vendor/three.module.js",
+    "vendor/three.core.js",
     "vendor/OrbitControls.js",
     "vendor/GLTFLoader.js",
+    "utils/BufferGeometryUtils.js",
+    "utils/SkeletonUtils.js",
     "vendor/THREE-LICENSE.txt",
     "vendor/icons/maximize.svg",
     "vendor/icons/rotate-ccw.svg",

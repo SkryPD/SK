@@ -1,6 +1,7 @@
 import * as THREE from "./vendor/three.module.js";
 import { OrbitControls } from "./vendor/OrbitControls.js";
 import { GLTFLoader } from "./vendor/GLTFLoader.js";
+import { fitDistanceForBounds } from "./camera.mjs";
 
 const MODEL_URL = "../rooftop_truth_model_v01.glb";
 const LAYER_LABELS = {
@@ -45,7 +46,7 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.08;
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 viewport.prepend(renderer.domElement);
 
 const scene = new THREE.Scene();
@@ -135,10 +136,13 @@ function applyPreset(name) {
   } else if (name === "V02-R1") {
     setPerspectivePose([24.6, 1.62, 3.05], [35.55, 1.2, 3.68], 55);
   } else {
-    const span = Math.max(modelSize.x, modelSize.z);
+    const target = new THREE.Vector3(modelCenter.x, modelCenter.y * 0.45, modelCenter.z);
+    const direction = new THREE.Vector3(1, 0.72, 0.85).normalize();
+    const distance = fitDistanceForBounds(modelSize, 46, viewportAspect());
+    const position = target.clone().addScaledVector(direction, distance);
     setPerspectivePose(
-      [modelCenter.x + span * 0.62, span * 0.48, modelCenter.z + span * 0.5],
-      [modelCenter.x, modelCenter.y * 0.45, modelCenter.z],
+      position.toArray(),
+      target.toArray(),
       46,
     );
   }
@@ -161,7 +165,7 @@ function buildLayerControls() {
   const fragment = document.createDocumentFragment();
   const layers = [];
   modelRoot.traverse((object) => {
-    if (object.userData.layer === object.name && object.type === "Group") {
+    if (object.userData.layer === object.name && Object.hasOwn(LAYER_LABELS, object.name)) {
       layers.push(object);
     }
   });
@@ -233,6 +237,21 @@ function showObjectDetails(object) {
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 let pointerDown = null;
+
+function isObjectVisibleInHierarchy(object) {
+  let current = object;
+  while (current) {
+    if (!current.visible) {
+      return false;
+    }
+    if (current === modelRoot) {
+      return true;
+    }
+    current = current.parent;
+  }
+  return false;
+}
+
 renderer.domElement.addEventListener("pointerdown", (event) => {
   pointerDown = [event.clientX, event.clientY];
 });
@@ -244,7 +263,9 @@ renderer.domElement.addEventListener("pointerup", (event) => {
   pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
   pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
   raycaster.setFromCamera(pointer, activeCamera);
-  const hit = raycaster.intersectObject(modelRoot, true).find((item) => item.object.userData.id);
+  const hit = raycaster.intersectObject(modelRoot, true).find(
+    (item) => item.object.userData.id && isObjectVisibleInHierarchy(item.object),
+  );
   if (hit) {
     showObjectDetails(hit.object);
   }
@@ -298,6 +319,7 @@ new GLTFLoader().load(
     applyPreset("isometric");
     loadStatus.textContent = "已载入";
     loadStatus.classList.add("is-ready");
+    document.documentElement.dataset.viewerReady = "true";
     window.__rooftopViewerReady = true;
     window.__rooftopViewer = {
       applyPreset,
@@ -315,6 +337,7 @@ new GLTFLoader().load(
     console.error(error);
     loadStatus.textContent = "模型读取失败";
     loadStatus.classList.add("is-error");
+    document.documentElement.dataset.viewerError = String(error);
     window.__rooftopViewerError = String(error);
   },
 );

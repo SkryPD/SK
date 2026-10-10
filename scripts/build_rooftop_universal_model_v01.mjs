@@ -23,14 +23,22 @@ async function buildViewer(outDir) {
   const viewerDir = resolve(outDir, "viewer");
   const vendorDir = resolve(viewerDir, "vendor");
   const iconDir = resolve(vendorDir, "icons");
-  await mkdir(iconDir, { recursive: true });
+  const utilsDir = resolve(viewerDir, "utils");
+  await Promise.all([
+    mkdir(iconDir, { recursive: true }),
+    mkdir(utilsDir, { recursive: true }),
+  ]);
   const copies = [
     [resolve(VIEWER_SOURCE_DIR, "index.html"), resolve(viewerDir, "index.html")],
     [resolve(VIEWER_SOURCE_DIR, "styles.css"), resolve(viewerDir, "styles.css")],
     [resolve(VIEWER_SOURCE_DIR, "app.js"), resolve(viewerDir, "app.js")],
+    [resolve(VIEWER_SOURCE_DIR, "camera.mjs"), resolve(viewerDir, "camera.mjs")],
     [resolve(THREE_PACKAGE_DIR, "build/three.module.js"), resolve(vendorDir, "three.module.js")],
+    [resolve(THREE_PACKAGE_DIR, "build/three.core.js"), resolve(vendorDir, "three.core.js")],
     [resolve(THREE_PACKAGE_DIR, "examples/jsm/controls/OrbitControls.js"), resolve(vendorDir, "OrbitControls.js")],
     [resolve(THREE_PACKAGE_DIR, "examples/jsm/loaders/GLTFLoader.js"), resolve(vendorDir, "GLTFLoader.js")],
+    [resolve(THREE_PACKAGE_DIR, "examples/jsm/utils/BufferGeometryUtils.js"), resolve(utilsDir, "BufferGeometryUtils.js")],
+    [resolve(THREE_PACKAGE_DIR, "examples/jsm/utils/SkeletonUtils.js"), resolve(utilsDir, "SkeletonUtils.js")],
     [resolve(THREE_PACKAGE_DIR, "LICENSE"), resolve(vendorDir, "THREE-LICENSE.txt")],
     [resolve(LUCIDE_ICON_DIR, "maximize.svg"), resolve(iconDir, "maximize.svg")],
     [resolve(LUCIDE_ICON_DIR, "rotate-ccw.svg"), resolve(iconDir, "rotate-ccw.svg")],

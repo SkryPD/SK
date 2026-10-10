@@ -43,6 +43,26 @@ test("universal export writes parseable GLB, millimetre OBJ/MTL and manifest", a
   assert.match(objText, /^f \d+(?:\/\d*\/\d+)? \d+(?:\/\d*\/\d+)? \d+(?:\/\d*\/\d+)?$/m);
   assert.match(mtlText, /^newmtl wall_verified$/m);
 
+  const objMaterialNames = new Set(
+    [...objText.matchAll(/^usemtl (.+)$/gm)].map((match) => match[1]),
+  );
+  const mtlMaterialNames = new Set(
+    [...mtlText.matchAll(/^newmtl (.+)$/gm)].map((match) => match[1]),
+  );
+  assert.deepEqual(
+    [...objMaterialNames].filter((name) => !mtlMaterialNames.has(name)),
+    [],
+    "every OBJ material must exist in the MTL library",
+  );
+  for (const floorMaterial of [
+    "floor_plane_verified",
+    "floor_plane_derived",
+    "floor_plane_owner_confirmed",
+  ]) {
+    assert.ok(objMaterialNames.has(floorMaterial), `OBJ uses ${floorMaterial}`);
+    assert.ok(mtlMaterialNames.has(floorMaterial), `MTL defines ${floorMaterial}`);
+  }
+
   const manifest = JSON.parse(manifestText);
   assert.equal(manifest.version, "rooftop-universal-3d-package-v01");
   assert.equal(manifest.coordinate_system.glb_units, "metres");

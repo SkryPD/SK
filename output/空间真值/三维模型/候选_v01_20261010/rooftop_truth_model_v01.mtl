@@ -1,20 +1,20 @@
 # Rooftop truth model v01 material library
 
-newmtl floor_verified
+newmtl floor_plane_verified
 Kd 0.721569 0.701961 0.666667
 Ka 0.000000 0.000000 0.000000
 Ks 0.050000 0.050000 0.050000
 d 1.000000
 illum 2
 
-newmtl floor_derived
+newmtl floor_plane_derived
 Kd 0.788235 0.764706 0.721569
 Ka 0.000000 0.000000 0.000000
 Ks 0.050000 0.050000 0.050000
 d 1.000000
 illum 2
 
-newmtl floor_owner_confirmed
+newmtl floor_plane_owner_confirmed
 Kd 0.725490 0.690196 0.623529
 Ka 0.000000 0.000000 0.000000
 Ks 0.050000 0.050000 0.050000

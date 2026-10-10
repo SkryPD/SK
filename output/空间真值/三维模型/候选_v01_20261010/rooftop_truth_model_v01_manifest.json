@@ -774,7 +774,7 @@
     "glb": {
       "filename": "rooftop_truth_model_v01.glb",
       "bytes": 68920,
-      "sha256": "0729efea154cc70bc064974291afe9aaa2e6ac62c820b0391a338f12968a4def"
+      "sha256": "3d1c76e5d99433076226dca03d080fe0df8a87f3a7d42e517969f980b63d9867"
     },
     "obj": {
       "filename": "rooftop_truth_model_v01_mm.obj",
@@ -783,8 +783,8 @@
     },
     "mtl": {
       "filename": "rooftop_truth_model_v01.mtl",
-      "bytes": 1859,
-      "sha256": "a31d70be56914a770c44aeffe64b1f0f6abd73d67f7b632b13955c12f3d8c538"
+      "bytes": 1877,
+      "sha256": "0074eec4f1e8a99ec0c4e4facc0a0134dc703be02cfcf650936359bf4515a4e1"
     }
   }
 }

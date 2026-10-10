@@ -1,9 +1,9 @@
 import * as THREE from "../../tools/rooftop3d-web/node_modules/three/build/three.module.js";
 
 export const MATERIAL_DEFINITIONS = {
-  floor_verified: { color: 0xb8b3aa, opacity: 1 },
-  floor_derived: { color: 0xc9c3b8, opacity: 1 },
-  floor_owner_confirmed: { color: 0xb9b09f, opacity: 1 },
+  floor_plane_verified: { color: 0xb8b3aa, opacity: 1 },
+  floor_plane_derived: { color: 0xc9c3b8, opacity: 1 },
+  floor_plane_owner_confirmed: { color: 0xb9b09f, opacity: 1 },
   room_volume_derived: { color: 0x7d8588, opacity: 0.92 },
   steel_column_owner_confirmed: { color: 0x4d5960, opacity: 1 },
   wall_verified: { color: 0xb79c7d, opacity: 1 },

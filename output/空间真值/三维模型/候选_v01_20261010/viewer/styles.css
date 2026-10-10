@@ -419,10 +419,18 @@ h1 {
     left: 0;
     width: 100%;
     max-height: min(58vh, 470px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     border-top: 1px solid var(--line);
     border-right: 0;
     box-shadow: 0 -10px 28px rgb(37 39 36 / 16%);
     transform: translateY(0);
+  }
+
+  .panel-header,
+  .panel-section,
+  .panel-footer {
+    flex: 0 0 auto;
   }
 
   .panel-collapsed .control-panel {
