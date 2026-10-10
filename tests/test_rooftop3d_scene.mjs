@@ -5,15 +5,17 @@ import {
   buildModelDescriptors,
   loadTruthScene,
   validateModel,
+  V04_SOURCE_PATH,
 } from "../src/rooftop3d/model.mjs";
 
-test("v04 truth scene builds the approved rooftop geometry contract", () => {
+test("v05 truth scene builds the owner-confirmed sealed-window geometry contract", () => {
   const source = loadTruthScene();
   const model = buildModelDescriptors(source);
   const byId = new Map(model.objects.map((item) => [item.id, item]));
 
-  assert.equal(source.version, "rooftop-whole-floor-truth-model-v04");
-  assert.equal(model.candidate_status, "candidate_requires_clash_decision");
+  assert.equal(source.version, "rooftop-whole-floor-truth-model-v05");
+  assert.equal(model.version, "rooftop-universal-3d-model-v02");
+  assert.equal(model.candidate_status, "candidate_window_ceiling_resolved");
   assert.deepEqual(model.topology.points_mm.C, [34240, 6160]);
   assert.deepEqual(byId.get("tea_room_floor").bounds_mm, [34240, 6160, 37440, 10260]);
   assert.equal(model.objects.filter((item) => item.kind === "steel_column").length, 4);
@@ -39,12 +41,29 @@ test("v04 truth scene builds the approved rooftop geometry contract", () => {
     object_ids: [],
     status: "requires_site_measurement",
   });
-  assert.equal(model.clashes[0].id, "tea_window_head_vs_ceiling");
-  assert.equal(model.clashes[0].overlap_mm, 300);
+  assert.deepEqual(byId.get("tea_room_only_window").dimensions_mm, [3220, 2100]);
+  assert.equal(byId.get("tea_room_only_window").z_min_mm, 350);
+  assert.equal(byId.get("tea_room_only_window").z_max_mm, 2450);
+  assert.equal(byId.get("tea_window_head_wall").z_min_mm, 2450);
+  assert.equal(byId.get("tea_window_head_wall").z_max_mm, 3020);
+  assert.deepEqual(model.clashes, []);
+  assert.equal(model.resolved_design_decisions[0].id, "tea_window_head_vs_ceiling");
+  assert.equal(model.resolved_design_decisions[0].status, "owner_confirmed_resolved");
   assert.deepEqual(validateModel(model), []);
 });
 
-test("loadTruthScene rejects any source version other than v04", () => {
+test("v04 truth scene remains rebuildable as the historical v01 model", () => {
+  const source = loadTruthScene(V04_SOURCE_PATH);
+  const model = buildModelDescriptors(source);
+
+  assert.equal(source.version, "rooftop-whole-floor-truth-model-v04");
+  assert.equal(model.version, "rooftop-universal-3d-model-v01");
+  assert.equal(model.clashes[0].overlap_mm, 300);
+  assert.deepEqual(model.resolved_design_decisions, []);
+  assert.deepEqual(validateModel(model), []);
+});
+
+test("loadTruthScene rejects unsupported source versions", () => {
   assert.throws(
     () => loadTruthScene(new URL("./fixtures/not-v04.json", import.meta.url)),
     /Unsupported rooftop truth scene version: test-version/,

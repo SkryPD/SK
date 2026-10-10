@@ -157,7 +157,8 @@ export function createThreeScene(model, { units = "metres" } = {}) {
   }
   const scale = units === "metres" ? 0.001 : 1;
   const scene = new THREE.Scene();
-  scene.name = "rooftop_truth_model_v01";
+  const versionSuffix = model.version.match(/-(v\d+)$/)?.[1] ?? "unversioned";
+  scene.name = `rooftop_truth_model_${versionSuffix}`;
   scene.userData = {
     version: model.version,
     candidate_status: model.candidate_status,
@@ -165,6 +166,7 @@ export function createThreeScene(model, { units = "metres" } = {}) {
     up_axis: "Y",
     axis_mapping: "world X=local X; world Y=local Z; world Z=local Y",
     clashes: model.clashes,
+    resolved_design_decisions: model.resolved_design_decisions,
   };
   const materialCache = new Map();
 

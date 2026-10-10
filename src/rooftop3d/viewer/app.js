@@ -3,7 +3,8 @@ import { OrbitControls } from "./vendor/OrbitControls.js";
 import { GLTFLoader } from "./vendor/GLTFLoader.js";
 import { fitDistanceForBounds } from "./camera.mjs";
 
-const MODEL_URL = "../rooftop_truth_model_v01.glb";
+const MODEL_VERSION = document.documentElement.dataset.modelVersion || "v02";
+const MODEL_URL = `../rooftop_truth_model_${MODEL_VERSION}.glb`;
 const LAYER_LABELS = {
   existing_floor_shell: "地面边界",
   existing_core_walls: "核心筒占位",
@@ -19,6 +20,7 @@ const STATUS_LABELS = {
   derived: "推导占位",
   requires_site_measurement: "需现场复尺",
   user_decision_required: "待业主决策",
+  owner_confirmed_resolved: "业主确认并解决",
 };
 const VIEW_LABELS = {
   plan: "俯视",

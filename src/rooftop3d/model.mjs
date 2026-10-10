@@ -3,16 +3,24 @@ import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 
 export const ROOT = fileURLToPath(new URL("../..", import.meta.url));
-export const SOURCE_PATH = resolve(
+export const V04_SOURCE_PATH = resolve(
   ROOT,
   "output/空间真值/整层灰模/候选_v04_20261010/楼顶整层灰模_v04_坐标场景.json",
 );
+export const V05_SOURCE_PATH = resolve(
+  ROOT,
+  "output/空间真值/整层灰模/候选_v05_20261011/楼顶整层灰模_v05_坐标场景.json",
+);
+export const SOURCE_PATH = V05_SOURCE_PATH;
 
-const REQUIRED_VERSION = "rooftop-whole-floor-truth-model-v04";
+const MODEL_VERSION_BY_SOURCE = new Map([
+  ["rooftop-whole-floor-truth-model-v04", "rooftop-universal-3d-model-v01"],
+  ["rooftop-whole-floor-truth-model-v05", "rooftop-universal-3d-model-v02"],
+]);
 
 export function loadTruthScene(path = SOURCE_PATH) {
   const source = JSON.parse(readFileSync(path, "utf8"));
-  if (source.version !== REQUIRED_VERSION) {
+  if (!MODEL_VERSION_BY_SOURCE.has(source.version)) {
     throw new Error(`Unsupported rooftop truth scene version: ${source.version}`);
   }
   return source;
@@ -115,7 +123,7 @@ function buildLayerMap(source, objects) {
 }
 
 export function buildModelDescriptors(source) {
-  if (source.version !== REQUIRED_VERSION) {
+  if (!MODEL_VERSION_BY_SOURCE.has(source.version)) {
     throw new Error(`Unsupported rooftop truth scene version: ${source.version}`);
   }
 
@@ -185,7 +193,7 @@ export function buildModelDescriptors(source) {
   handled.add("equipment_rack");
 
   const layers = buildLayerMap(source, objects);
-  const clashes = source.design_clashes.map((clash) => ({
+  const clashes = (source.design_clashes ?? []).map((clash) => ({
     id: clash.id,
     window_head_mm: clash.window_head_mm,
     ceiling_height_mm: clash.level_1_ceiling_mm,
@@ -194,9 +202,10 @@ export function buildModelDescriptors(source) {
     model_action: clash.model_action,
     note: clash.note,
   }));
+  const resolvedDesignDecisions = structuredClone(source.resolved_design_decisions ?? []);
 
   return {
-    version: "rooftop-universal-3d-model-v01",
+    version: MODEL_VERSION_BY_SOURCE.get(source.version),
     source_version: source.version,
     candidate_status: source.candidate_status,
     units: "millimetres",
@@ -206,6 +215,7 @@ export function buildModelDescriptors(source) {
     objects,
     equipment,
     clashes,
+    resolved_design_decisions: resolvedDesignDecisions,
     excluded_scope: [...source.excluded_scope],
     unhandled_source_objects: source.objects
       .filter((item) => !handled.has(item.id))
@@ -295,9 +305,37 @@ export function validateModel(model) {
     || terraceWall.bounds_mm[3] !== e[1])) {
     errors.push("E-D must coincide with the terrace boundary wall");
   }
-  const clash = model.clashes.find((item) => item.id === "tea_window_head_vs_ceiling");
-  if (!clash || clash.overlap_mm !== 300 || clash.status !== "user_decision_required") {
-    errors.push("window-head ceiling clash must remain visible at 300 mm");
+  if (model.version === "rooftop-universal-3d-model-v01") {
+    const clash = model.clashes.find((item) => item.id === "tea_window_head_vs_ceiling");
+    if (!clash || clash.overlap_mm !== 300 || clash.status !== "user_decision_required") {
+      errors.push("v01 window-head ceiling clash must remain visible at 300 mm");
+    }
+  } else if (model.version === "rooftop-universal-3d-model-v02") {
+    const window = byId.get("tea_room_only_window");
+    const headWall = byId.get("tea_window_head_wall");
+    if (!window
+      || window.z_min_mm !== 350
+      || window.z_max_mm !== 2450
+      || window.height_mm !== 2100
+      || window.dimensions_mm?.[0] !== 3220
+      || window.dimensions_mm?.[1] !== 2100) {
+      errors.push("v02 tea-room window must be 3220x2100 mm from Z=350 to Z=2450");
+    }
+    if (!headWall || headWall.z_min_mm !== 2450 || headWall.z_max_mm !== 3020) {
+      errors.push("v02 upper infill wall must close from Z=2450 to Z=3020");
+    }
+    if (model.clashes.length !== 0) {
+      errors.push("v02 must not retain an unresolved window-head ceiling clash");
+    }
+    const resolution = model.resolved_design_decisions.find(
+      (item) => item.id === "tea_window_head_vs_ceiling",
+    );
+    if (!resolution
+      || resolution.status !== "owner_confirmed_resolved"
+      || resolution.former_overlap_mm !== 300
+      || resolution.new_window_head_mm !== 2450) {
+      errors.push("v02 must retain the owner-confirmed window-head resolution record");
+    }
   }
   if (model.unhandled_source_objects.length > 0) {
     errors.push(`unhandled source objects: ${model.unhandled_source_objects.join(", ")}`);

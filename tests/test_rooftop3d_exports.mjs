@@ -29,14 +29,18 @@ test("universal export writes parseable GLB, millimetre OBJ/MTL and manifest", a
 
   const glbJson = parseGlbJson(glb);
   const teaWallNode = glbJson.nodes.find((node) => node.name === "tea_background_wall");
+  const windowHeadNode = glbJson.nodes.find((node) => node.name === "tea_window_head_wall");
   assert.ok(teaWallNode);
+  assert.ok(windowHeadNode);
   assert.equal(teaWallNode.extras.layer, "approved_fixed_design");
   assert.equal(teaWallNode.extras.status, "verified");
   assert.deepEqual(teaWallNode.extras.bounds_mm, [37320, 6160, 37440, 10260]);
   assert.ok(glbJson.nodes.some((node) => node.name === "bar_body_fixed_run"));
   assert.ok(glbJson.nodes.some((node) => node.name === "E5"));
+  assert.equal(windowHeadNode.extras.z_min_mm, 2450);
+  assert.equal(windowHeadNode.extras.z_max_mm, 3020);
 
-  assert.match(objText, /^mtllib rooftop_truth_model_v01\.mtl/m);
+  assert.match(objText, /^mtllib rooftop_truth_model_v02\.mtl/m);
   assert.match(objText, /^g tea_background_wall$/m);
   assert.match(objText, /^usemtl wall_verified$/m);
   assert.match(objText, /^v 37320 0 6160$/m);
@@ -64,12 +68,16 @@ test("universal export writes parseable GLB, millimetre OBJ/MTL and manifest", a
   }
 
   const manifest = JSON.parse(manifestText);
-  assert.equal(manifest.version, "rooftop-universal-3d-package-v01");
+  assert.equal(manifest.version, "rooftop-universal-3d-package-v02");
+  assert.equal(manifest.model_version, "rooftop-universal-3d-model-v02");
+  assert.equal(manifest.source_version, "rooftop-whole-floor-truth-model-v05");
   assert.equal(manifest.coordinate_system.glb_units, "metres");
   assert.equal(manifest.coordinate_system.obj_units, "millimetres");
   assert.equal(manifest.coordinate_system.up_axis, "Y");
-  assert.equal(manifest.candidate_status, "candidate_requires_clash_decision");
-  assert.equal(manifest.design_clashes[0].overlap_mm, 300);
+  assert.equal(manifest.candidate_status, "candidate_window_ceiling_resolved");
+  assert.deepEqual(manifest.design_clashes, []);
+  assert.equal(manifest.resolved_design_decisions[0].former_overlap_mm, 300);
+  assert.equal(manifest.resolved_design_decisions[0].new_window_head_mm, 2450);
   assert.deepEqual(manifest.layers.existing_roof_truss.object_ids, []);
   assert.deepEqual(manifest.layers.future_glass_system.object_ids, []);
   assert.equal(manifest.source.sha256.length, 64);

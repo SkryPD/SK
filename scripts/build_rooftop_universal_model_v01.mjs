@@ -1,12 +1,13 @@
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
-import { copyFile, mkdir } from "node:fs/promises";
+import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 
 import {
   buildModelDescriptors,
   loadTruthScene,
   ROOT,
   validateModel,
+  V04_SOURCE_PATH,
 } from "../src/rooftop3d/model.mjs";
 import { exportUniversalPackage } from "../src/rooftop3d/exporters.mjs";
 
@@ -45,17 +46,29 @@ async function buildViewer(outDir) {
     [resolve(LUCIDE_ICON_DIR, "panel-left.svg"), resolve(iconDir, "panel-left.svg")],
   ];
   await Promise.all(copies.map(([source, destination]) => copyFile(source, destination)));
+  const threeCorePath = resolve(vendorDir, "three.core.js");
+  const normalizedThreeCore = (await readFile(threeCorePath, "utf8")).replaceAll(" \t", "\t");
+  await writeFile(threeCorePath, normalizedThreeCore, "utf8");
+  const indexPath = resolve(viewerDir, "index.html");
+  const index = (await readFile(indexPath, "utf8"))
+    .replace('data-model-version="v02"', 'data-model-version="v01"')
+    .replaceAll("楼顶空间真值模型 v02", "楼顶空间真值模型 v01")
+    .replace("候选 v02", "候选 v01")
+    .replace('class="clash-flag is-resolved"', 'class="clash-flag"')
+    .replace("窗洞封顶已确认", "窗顶 / 天花冲突")
+    .replace("Z 2450", "300 mm");
+  await writeFile(indexPath, index, "utf8");
   return viewerDir;
 }
 
 export async function buildPackage(outDir = OUTPUT_DIR) {
-  const source = loadTruthScene();
+  const source = loadTruthScene(V04_SOURCE_PATH);
   const model = buildModelDescriptors(source);
   const errors = validateModel(model);
   if (errors.length > 0) {
     throw new Error(`Model validation failed:\n${errors.join("\n")}`);
   }
-  const exported = await exportUniversalPackage(model, outDir);
+  const exported = await exportUniversalPackage(model, outDir, { sourcePath: V04_SOURCE_PATH });
   const viewerDir = await buildViewer(outDir);
   return { ...exported, viewerDir };
 }

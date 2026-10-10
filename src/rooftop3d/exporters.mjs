@@ -7,12 +7,19 @@ import { OBJExporter } from "../../tools/rooftop3d-web/node_modules/three/exampl
 import { SOURCE_PATH, validateModel } from "./model.mjs";
 import { createThreeScene, MATERIAL_DEFINITIONS } from "./three-scene.mjs";
 
-const FILENAMES = {
-  glb: "rooftop_truth_model_v01.glb",
-  obj: "rooftop_truth_model_v01_mm.obj",
-  mtl: "rooftop_truth_model_v01.mtl",
-  manifest: "rooftop_truth_model_v01_manifest.json",
-};
+export function filenamesForModel(model) {
+  const suffix = model.version.match(/-(v\d+)$/)?.[1];
+  if (!suffix) {
+    throw new Error(`Unsupported rooftop model version: ${model.version}`);
+  }
+  return {
+    suffix,
+    glb: `rooftop_truth_model_${suffix}.glb`,
+    obj: `rooftop_truth_model_${suffix}_mm.obj`,
+    mtl: `rooftop_truth_model_${suffix}.mtl`,
+    manifest: `rooftop_truth_model_${suffix}_manifest.json`,
+  };
+}
 
 function sha256(data) {
   return createHash("sha256").update(data).digest("hex");
@@ -54,8 +61,8 @@ function installFileReaderPolyfill() {
   };
 }
 
-function materialText() {
-  const lines = ["# Rooftop truth model v01 material library"];
+function materialText(versionSuffix) {
+  const lines = [`# Rooftop truth model ${versionSuffix} material library`];
   for (const [name, definition] of Object.entries(MATERIAL_DEFINITIONS)) {
     const red = ((definition.color >> 16) & 255) / 255;
     const green = ((definition.color >> 8) & 255) / 255;
@@ -122,6 +129,7 @@ export async function exportUniversalPackage(model, outDir, { sourcePath = SOURC
   }
   await mkdir(outDir, { recursive: true });
   installFileReaderPolyfill();
+  const filenames = filenamesForModel(model);
 
   const sceneMetres = createThreeScene(model, { units: "metres" });
   const glbArrayBuffer = await new GLTFExporter().parseAsync(sceneMetres, {
@@ -137,18 +145,18 @@ export async function exportUniversalPackage(model, outDir, { sourcePath = SOURC
   sceneMillimetres.updateMatrixWorld(true);
   const rawObj = new OBJExporter().parse(sceneMillimetres);
   const obj = [
-    "# Rooftop truth model v01",
+    `# Rooftop truth model ${filenames.suffix}`,
     "# units: millimetres; up axis: Y",
-    `mtllib ${FILENAMES.mtl}`,
+    `mtllib ${filenames.mtl}`,
     rawObj.replace(/^o /gm, "g ").trimEnd(),
     "",
   ].join("\n");
-  const mtl = materialText();
+  const mtl = materialText(filenames.suffix);
 
-  const glbPath = join(outDir, FILENAMES.glb);
-  const objPath = join(outDir, FILENAMES.obj);
-  const mtlPath = join(outDir, FILENAMES.mtl);
-  const manifestPath = join(outDir, FILENAMES.manifest);
+  const glbPath = join(outDir, filenames.glb);
+  const objPath = join(outDir, filenames.obj);
+  const mtlPath = join(outDir, filenames.mtl);
+  const manifestPath = join(outDir, filenames.manifest);
   await Promise.all([
     writeFile(glbPath, glb),
     writeFile(objPath, obj, "utf8"),
@@ -162,7 +170,7 @@ export async function exportUniversalPackage(model, outDir, { sourcePath = SOURC
     readFile(mtlPath),
   ]);
   const manifest = {
-    version: "rooftop-universal-3d-package-v01",
+    version: `rooftop-universal-3d-package-${filenames.suffix}`,
     model_version: model.version,
     source_version: model.source_version,
     candidate_status: model.candidate_status,
@@ -184,12 +192,13 @@ export async function exportUniversalPackage(model, outDir, { sourcePath = SOURC
     layers: model.layers,
     objects: model.objects.map(objectManifestEntry),
     design_clashes: model.clashes,
+    resolved_design_decisions: model.resolved_design_decisions,
     excluded_scope: model.excluded_scope,
     unhandled_source_objects: model.unhandled_source_objects,
     files: {
-      glb: { filename: FILENAMES.glb, bytes: glbBytes.length, sha256: sha256(glbBytes) },
-      obj: { filename: FILENAMES.obj, bytes: objBytes.length, sha256: sha256(objBytes) },
-      mtl: { filename: FILENAMES.mtl, bytes: mtlBytes.length, sha256: sha256(mtlBytes) },
+      glb: { filename: filenames.glb, bytes: glbBytes.length, sha256: sha256(glbBytes) },
+      obj: { filename: filenames.obj, bytes: objBytes.length, sha256: sha256(objBytes) },
+      mtl: { filename: filenames.mtl, bytes: mtlBytes.length, sha256: sha256(mtlBytes) },
     },
   };
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
