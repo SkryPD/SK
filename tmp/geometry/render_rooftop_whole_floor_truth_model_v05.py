@@ -479,8 +479,8 @@ def scene_spec() -> dict:
         "units": "millimetres",
         "purpose": "spatial truth, camera control and owner-confirmed design review; not construction setting-out",
         "authority": [
-            str(TRUTH_LEDGER),
-            str(CEILING_RECORD),
+            TRUTH_LEDGER.relative_to(ROOT).as_posix(),
+            CEILING_RECORD.relative_to(ROOT).as_posix(),
             "owner corrections in the current thread",
             "DWG/PDF for unchanged shell geometry",
         ],

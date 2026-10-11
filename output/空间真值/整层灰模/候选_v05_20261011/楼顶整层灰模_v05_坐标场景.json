@@ -4,8 +4,8 @@
   "units": "millimetres",
   "purpose": "spatial truth, camera control and owner-confirmed design review; not construction setting-out",
   "authority": [
-    "C:\\Users\\SkryPD\\Documents\\ChatGPT\\听风径民宿装修方向\\output\\现场复尺审阅\\20261008_逐项确认\\现场复尺已确认真值_20261009.md",
-    "C:\\Users\\SkryPD\\Documents\\ChatGPT\\听风径民宿装修方向\\output\\空间真值\\天花设计控制\\楼顶两级吊顶业主确认_20261009.md",
+    "output/现场复尺审阅/20261008_逐项确认/现场复尺已确认真值_20261009.md",
+    "output/空间真值/天花设计控制/楼顶两级吊顶业主确认_20261009.md",
     "owner corrections in the current thread",
     "DWG/PDF for unchanged shell geometry"
   ],

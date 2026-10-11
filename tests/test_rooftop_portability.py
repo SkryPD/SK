@@ -18,6 +18,18 @@ V04_SCENE_PATH = (
     / "候选_v04_20261010"
     / "楼顶整层灰模_v04_坐标场景.json"
 )
+V05_SCENE_PATH = (
+    ROOT
+    / "output"
+    / "空间真值"
+    / "整层灰模"
+    / "候选_v05_20261011"
+    / "楼顶整层灰模_v05_坐标场景.json"
+)
+EXPECTED_AUTHORITY_PATHS = [
+    "output/现场复尺审阅/20261008_逐项确认/现场复尺已确认真值_20261009.md",
+    "output/空间真值/天花设计控制/楼顶两级吊顶业主确认_20261009.md",
+]
 
 
 def load_module(path: Path):
@@ -38,6 +50,20 @@ class RooftopPortabilityTests(unittest.TestCase):
         ]
 
         self.assertEqual(absolute_authorities, [])
+
+    def test_current_v05_generator_and_scene_use_repository_relative_authorities(self) -> None:
+        renderer = load_module(RENDERER_PATH)
+        scenes = {
+            "generator": renderer.scene_spec(),
+            "archived": json.loads(V05_SCENE_PATH.read_text(encoding="utf-8")),
+        }
+
+        for source, scene in scenes.items():
+            with self.subTest(source=source):
+                self.assertEqual(scene["authority"][:2], EXPECTED_AUTHORITY_PATHS)
+                self.assertFalse(
+                    any(PureWindowsPath(entry).is_absolute() for entry in scene["authority"])
+                )
 
     def test_v05_files_do_not_embed_the_owner_workstation_path(self) -> None:
         for path in (RENDERER_PATH, RENDERER_TEST_PATH):
