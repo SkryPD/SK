@@ -186,6 +186,6 @@ git grep -n -I -E '(sk-[A-Za-z0-9_-]{20,}|api[_-]?key[[:space:]]*[:=])'
 
 Also rebuild v03 into a fresh temporary directory, compare all generated core files by SHA-256 against the archived package, and verify the GLB/OBJ/MTL files against their manifest entries.
 
-- [ ] **Step 5: Commit and push without merging**
+- [x] **Step 5: Commit and push without merging**
 
 Stage only files belonging to this plan, commit with `fix: harden rooftop truth model package`, push `codex/spa-c-3d`, and recheck PR #1 state. Do not merge.
