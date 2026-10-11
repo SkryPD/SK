@@ -1,0 +1,59 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: tools/rooftop3d-web/package-lock.json
+
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Install Node.js dependencies
+        run: npm ci --prefix tools/rooftop3d-web
+
+      - name: Run Python tests
+        run: python scripts/python_test_runner.py
+
+      - name: Run Node.js tests
+        run: node --test tests/*.mjs
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: find src scripts tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
+
+      - name: Compile Python sources
+        run: python -m compileall -q scripts tests tmp/geometry
+
+      - name: Check changed-file whitespace
+        shell: bash
+        run: |
+          if [[ -n "${GITHUB_BASE_REF}" ]]; then
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          else
+            git diff --check "HEAD^...HEAD"
+          fi

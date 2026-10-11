@@ -1,0 +1,935 @@
+{
+  "version": "rooftop-whole-floor-truth-model-v05",
+  "candidate_status": "candidate_window_ceiling_resolved",
+  "units": "millimetres",
+  "purpose": "spatial truth, camera control and owner-confirmed design review; not construction setting-out",
+  "authority": [
+    "output/现场复尺审阅/20261008_逐项确认/现场复尺已确认真值_20261009.md",
+    "output/空间真值/天花设计控制/楼顶两级吊顶业主确认_20261009.md",
+    "owner corrections in the current thread",
+    "DWG/PDF for unchanged shell geometry"
+  ],
+  "coordinate_system": {
+    "cad_origin": [
+      547064.38,
+      -262312.323
+    ],
+    "local_x_rule": "cad_x-origin_x with owner-confirmed east-end overrides",
+    "local_y_rule": "-(cad_y-origin_y)",
+    "historic_bottom_dimension_chain_mm": [
+      17390,
+      1000,
+      12380,
+      120,
+      2500,
+      120,
+      3930
+    ],
+    "historic_total_mm": 37440,
+    "east_end_anchor_points_mm": {
+      "A": 31240,
+      "C": 34240,
+      "B": 37440
+    },
+    "overall_plan_bounds_mm": [
+      0,
+      -2900,
+      37640,
+      10260
+    ]
+  },
+  "global_control_mm": {
+    "east_end_baseline_y": 6160,
+    "superseded_east_end_baseline_y": 5040,
+    "east_end_translation_y": 1120
+  },
+  "tea_room_topology": {
+    "confirmation_artifact": "34_茶室墙体拓扑_照片方向俯视确认_v02.png",
+    "confirmed_on": "2026-10-10",
+    "points_mm": {
+      "A": [
+        31240,
+        6160
+      ],
+      "C": [
+        34240,
+        6160
+      ],
+      "B": [
+        37440,
+        6160
+      ],
+      "D": [
+        37440,
+        10260
+      ],
+      "E": [
+        34240,
+        10260
+      ]
+    },
+    "photo_red_circle_point": "C",
+    "collinear_sequence": [
+      "A",
+      "C",
+      "B"
+    ],
+    "open_passage_segment": [
+      "A",
+      "C"
+    ],
+    "shared_wall_segment": [
+      "C",
+      "B"
+    ],
+    "window_wall_segment": [
+      "C",
+      "E"
+    ],
+    "background_wall_segment": [
+      "B",
+      "D"
+    ],
+    "parallel_walls": [
+      [
+        "C",
+        "E"
+      ],
+      [
+        "B",
+        "D"
+      ]
+    ],
+    "terrace_boundary_segment": [
+      "E",
+      "D"
+    ],
+    "extra_transition_band": false,
+    "extra_inner_wall": false
+  },
+  "east_end_control_mm": {
+    "passage_clear_width": 3000,
+    "shared_wall_length": 3200,
+    "control_total": 6200,
+    "passage_has_door": false,
+    "passage_has_frame": false,
+    "passage_has_lintel_or_wall_head": false,
+    "passage_open_height": 2700
+  },
+  "open_facade_control_mm": {
+    "direction": "tea_room_end_to_west_end",
+    "fixed_wall_to_c1": 3200,
+    "column_width_along_row": 105,
+    "column_depth_indoor_to_terrace": 150,
+    "clear_bays": [
+      3130,
+      4170,
+      3960
+    ],
+    "four_column_chain": 11680,
+    "fixed_wall_to_c4_west_face": 14880
+  },
+  "floor_levels_mm": {
+    "public_interior": 0,
+    "tea_room": 0,
+    "terrace": 0
+  },
+  "ceiling_controls_mm": {
+    "level_1_tea_room": {
+      "height": 2450,
+      "coverage": "complete_tea_room_v05_topology",
+      "plan_extent_mm": [
+        3200,
+        4100
+      ]
+    },
+    "level_2_main": {
+      "height": 2700,
+      "coverage": "all_interior_except_tea_room"
+    },
+    "level_difference": 250,
+    "open_passage_to_level_2_ceiling": true
+  },
+  "layers": [
+    {
+      "id": "existing_floor_shell",
+      "default_visible": true,
+      "object_ids": [
+        "west_unroofed_terrace",
+        "main_hall_floor",
+        "south_mountain_terrace_band",
+        "east_transition_floor",
+        "tea_room_floor"
+      ]
+    },
+    {
+      "id": "existing_core_walls",
+      "default_visible": true,
+      "object_ids": [
+        "core_toilet",
+        "core_stair",
+        "core_elevator"
+      ]
+    },
+    {
+      "id": "existing_steel_columns",
+      "default_visible": true,
+      "object_ids": [
+        "steel_column_c1",
+        "steel_column_c2",
+        "steel_column_c3",
+        "steel_column_c4"
+      ]
+    },
+    {
+      "id": "approved_fixed_design",
+      "default_visible": true,
+      "object_ids": [
+        "bar_operation_zone",
+        "bar_body",
+        "bar_flip_gate",
+        "equipment_run",
+        "equipment_rack",
+        "equipment_background_wall",
+        "electrical_room_entry",
+        "tea_open_passage",
+        "tea_bar_shared_wall",
+        "tea_window_wall_north_jamb",
+        "tea_window_wall_south_jamb",
+        "tea_window_sill_wall",
+        "tea_window_head_wall",
+        "tea_room_only_window",
+        "tea_terrace_boundary_wall",
+        "tea_background_wall"
+      ]
+    },
+    {
+      "id": "design_ceiling",
+      "default_visible": false,
+      "object_ids": [
+        "ceiling_level_1_tea_room",
+        "ceiling_level_2_main"
+      ]
+    },
+    {
+      "id": "future_glass_system",
+      "default_visible": false,
+      "object_ids": []
+    }
+  ],
+  "objects": [
+    {
+      "id": "west_unroofed_terrace",
+      "label": "西侧室外露台",
+      "layer": "existing_floor_shell",
+      "category": "floor",
+      "bounds_mm": [
+        0,
+        0,
+        17390,
+        9160
+      ],
+      "status": "verified",
+      "source": "DWG/PDF plan footprint; retained as the west exterior zone",
+      "display": true,
+      "dimensions_mm": [
+        17390,
+        9160
+      ],
+      "level_mm": 0,
+      "space_type": "exterior"
+    },
+    {
+      "id": "main_hall_floor",
+      "label": "公共大厅 / 室内主体",
+      "layer": "existing_floor_shell",
+      "category": "floor",
+      "bounds_mm": [
+        18390,
+        0,
+        31240,
+        6160
+      ],
+      "status": "derived",
+      "source": "DWG/PDF hall shell with owner-controlled east passage start A",
+      "display": true,
+      "dimensions_mm": [
+        12850,
+        6160
+      ],
+      "level_mm": 0,
+      "space_type": "interior",
+      "note": "East edge follows owner A control; not a replacement construction dimension for the historic PDF chain."
+    },
+    {
+      "id": "south_mountain_terrace_band",
+      "label": "面山露台带",
+      "layer": "existing_floor_shell",
+      "category": "floor",
+      "bounds_mm": [
+        18460,
+        6160,
+        34240,
+        10260
+      ],
+      "status": "derived",
+      "source": "Plan/site-photo relation: exterior terrace lies beyond the open facade column row",
+      "display": true,
+      "dimensions_mm": [
+        15780,
+        4100
+      ],
+      "level_mm": 0,
+      "space_type": "exterior"
+    },
+    {
+      "id": "east_transition_floor",
+      "label": "茶室前过渡 / 开放通道区",
+      "layer": "existing_floor_shell",
+      "category": "floor",
+      "bounds_mm": [
+        31240,
+        0,
+        34240,
+        6160
+      ],
+      "status": "derived",
+      "source": "Owner A-B control overlaid on the drawing shell",
+      "display": true,
+      "dimensions_mm": [
+        3000,
+        6160
+      ],
+      "level_mm": 0,
+      "space_type": "interior_transition"
+    },
+    {
+      "id": "tea_room_floor",
+      "label": "茶室净域",
+      "layer": "existing_floor_shell",
+      "category": "floor",
+      "bounds_mm": [
+        34240,
+        6160,
+        37440,
+        10260
+      ],
+      "status": "owner_confirmed",
+      "source": "Owner-confirmed C-B-D-E tea-room topology retained in v05",
+      "display": true,
+      "dimensions_mm": [
+        3200,
+        4100
+      ],
+      "level_mm": 0,
+      "space_type": "interior"
+    },
+    {
+      "id": "core_toilet",
+      "label": "卫生间体块",
+      "layer": "existing_core_walls",
+      "category": "room_volume",
+      "bounds_mm": [
+        23980,
+        -2900,
+        27421,
+        0
+      ],
+      "status": "derived",
+      "source": "DWG block extents plus page-1 visual review",
+      "display": true,
+      "height_mm": 2700,
+      "group": "core"
+    },
+    {
+      "id": "core_stair",
+      "label": "楼梯体块",
+      "layer": "existing_core_walls",
+      "category": "room_volume",
+      "bounds_mm": [
+        28321,
+        -2900,
+        32040,
+        0
+      ],
+      "status": "derived",
+      "source": "DWG block extents plus page-1 visual review",
+      "display": true,
+      "height_mm": 2700,
+      "group": "core"
+    },
+    {
+      "id": "core_elevator",
+      "label": "电梯 / 井道体块",
+      "layer": "existing_core_walls",
+      "category": "room_volume",
+      "bounds_mm": [
+        34330,
+        -2900,
+        36930,
+        0
+      ],
+      "status": "derived",
+      "source": "DWG block extents plus owner identification of the primary elevator entry",
+      "display": true,
+      "height_mm": 2700,
+      "group": "core"
+    },
+    {
+      "id": "bar_operation_zone",
+      "label": "吧台 / 后场操作区",
+      "layer": "approved_fixed_design",
+      "category": "fixed_design_zone",
+      "bounds_mm": [
+        35040,
+        1130,
+        37440,
+        6160
+      ],
+      "status": "owner_confirmed",
+      "source": "Latest owner correction: 5030 bar run with 1000 standard aisle",
+      "display": true,
+      "dimensions_mm": [
+        2400,
+        5030
+      ]
+    },
+    {
+      "id": "bar_body",
+      "label": "吧台 5030×800×1000",
+      "layer": "approved_fixed_design",
+      "category": "fixed_fixture",
+      "bounds_mm": [
+        35040,
+        1130,
+        35840,
+        6160
+      ],
+      "status": "owner_confirmed",
+      "source": "Owner correction recorded after the v01/v17 archive",
+      "display": true,
+      "dimensions_mm": [
+        800,
+        5030,
+        1000
+      ],
+      "height_mm": 1000
+    },
+    {
+      "id": "bar_flip_gate",
+      "label": "800上下翻门",
+      "layer": "approved_fixed_design",
+      "category": "fixed_fixture",
+      "bounds_mm": [
+        35040,
+        1130,
+        35840,
+        1930
+      ],
+      "status": "owner_confirmed",
+      "source": "800 upper/lower flip gate included in the 5030 bar run",
+      "display": true,
+      "dimensions_mm": [
+        800,
+        800
+      ],
+      "height_mm": 1000
+    },
+    {
+      "id": "equipment_run",
+      "label": "4400设备段",
+      "layer": "approved_fixed_design",
+      "category": "fixed_fixture",
+      "bounds_mm": [
+        36840,
+        1760,
+        37440,
+        6160
+      ],
+      "status": "owner_confirmed",
+      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance",
+      "display": true,
+      "dimensions_mm": [
+        600,
+        4400
+      ],
+      "height_mm": 900
+    },
+    {
+      "id": "equipment_rack",
+      "label": "上下叠放设备架",
+      "layer": "approved_fixed_design",
+      "category": "fixed_fixture",
+      "bounds_mm": [
+        36640,
+        5160,
+        37440,
+        6160
+      ],
+      "status": "owner_confirmed",
+      "source": "Owner-confirmed 1000-long, 800-deep stacked appliance rack",
+      "display": true,
+      "dimensions_mm": [
+        800,
+        1000
+      ],
+      "height_mm": 1800
+    },
+    {
+      "id": "equipment_background_wall",
+      "label": "完整平直设备背景墙",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        37440,
+        1130,
+        37640,
+        6160
+      ],
+      "status": "owner_confirmed",
+      "source": "Owner-confirmed continuous flat background wall; zero opening or recess",
+      "display": true,
+      "dimensions_mm": [
+        200,
+        5030
+      ],
+      "height_mm": 2700,
+      "opening_count": 0
+    },
+    {
+      "id": "electrical_room_entry",
+      "label": "电房入口570×2150",
+      "layer": "approved_fixed_design",
+      "category": "opening_control",
+      "bounds_mm": null,
+      "status": "owner_confirmed",
+      "source": "T18-T19; entry sits on the side wall and touches the equipment-background-wall corner",
+      "display": false,
+      "dimensions_mm": [
+        570,
+        2150
+      ],
+      "relation": "side_wall_at_equipment_background_corner"
+    },
+    {
+      "id": "tea_open_passage",
+      "label": "开放通道3000",
+      "layer": "approved_fixed_design",
+      "category": "opening_control",
+      "bounds_mm": [
+        31240,
+        6060,
+        34240,
+        6260
+      ],
+      "status": "owner_confirmed",
+      "source": "T20-T21 plus C04: open passage, no door/frame/wall head",
+      "display": true,
+      "dimensions_mm": [
+        3000,
+        2700
+      ],
+      "height_mm": 2700,
+      "has_door": false,
+      "has_frame": false,
+      "has_lintel_or_wall_head": false
+    },
+    {
+      "id": "tea_bar_shared_wall",
+      "label": "吧台与茶室共同墙3200",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        34240,
+        6160,
+        37440,
+        6360
+      ],
+      "status": "owner_confirmed",
+      "source": "T05 and T21: bar/tea shared 200-lightweight-block wall",
+      "display": true,
+      "dimensions_mm": [
+        3200,
+        200
+      ],
+      "height_mm": 2700
+    },
+    {
+      "id": "tea_window_wall_north_jamb",
+      "label": "茶室窗墙北侧墙段",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        34240,
+        6160,
+        34440,
+        6600
+      ],
+      "status": "derived",
+      "source": "Window length is verified; this jamb display offset remains to be site-measured",
+      "display": true,
+      "dimensions_mm": [
+        200,
+        440
+      ],
+      "height_mm": 3020,
+      "plan_offset_status": "requires_site_measurement"
+    },
+    {
+      "id": "tea_window_wall_south_jamb",
+      "label": "茶室窗墙南侧墙段",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        34240,
+        9820,
+        34440,
+        10260
+      ],
+      "status": "derived",
+      "source": "Window length is verified; this jamb display offset remains to be site-measured",
+      "display": true,
+      "dimensions_mm": [
+        200,
+        440
+      ],
+      "height_mm": 3020,
+      "plan_offset_status": "requires_site_measurement"
+    },
+    {
+      "id": "tea_window_sill_wall",
+      "label": "茶室窗下墙",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        34240,
+        6600,
+        34440,
+        9820
+      ],
+      "status": "owner_confirmed",
+      "source": "T01-T04 and T11 window vertical dimensions",
+      "display": true,
+      "dimensions_mm": [
+        200,
+        3220
+      ],
+      "height_mm": 350,
+      "plan_offset_status": "requires_site_measurement"
+    },
+    {
+      "id": "tea_window_head_wall",
+      "label": "茶室窗上封顶墙",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        34240,
+        6600,
+        34440,
+        9820
+      ],
+      "status": "owner_confirmed",
+      "source": "Owner-confirmed infill extends the upper wall down to the 2450 finished ceiling",
+      "display": true,
+      "dimensions_mm": [
+        200,
+        3220
+      ],
+      "height_mm": 570,
+      "z_mm": 2450,
+      "z_max_mm": 3020,
+      "former_z_mm": 2750,
+      "resolved_infill_mm": 300,
+      "plan_offset_status": "requires_site_measurement"
+    },
+    {
+      "id": "tea_room_only_window",
+      "label": "茶室唯一窗3220×2100",
+      "layer": "approved_fixed_design",
+      "category": "opening",
+      "bounds_mm": [
+        34240,
+        6600,
+        34440,
+        9820
+      ],
+      "status": "owner_confirmed",
+      "source": "T01-T04 and T11; display centered only because the opposite-corner offset remains unmeasured",
+      "display": false,
+      "dimensions_mm": [
+        3220,
+        2100
+      ],
+      "height_mm": 2100,
+      "z_mm": 350,
+      "sill_height_mm": 350,
+      "head_height_mm": 2450,
+      "adjacent_column_clear_mm": 300,
+      "top_to_eave_underside_mm": 570,
+      "former_opening_height_mm": 2400,
+      "upper_infill_mm": 300,
+      "plan_offset_status": "requires_site_measurement"
+    },
+    {
+      "id": "tea_terrace_boundary_wall",
+      "label": "茶室露台侧边界墙 E-D",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        34240,
+        10140,
+        37440,
+        10260
+      ],
+      "status": "verified",
+      "source": "Owner-confirmed E-D wall/boundary coincident with the terrace edge",
+      "display": true,
+      "dimensions_mm": [
+        3200,
+        120
+      ],
+      "height_mm": 2700
+    },
+    {
+      "id": "tea_background_wall",
+      "label": "茶室背景实墙 B-D",
+      "layer": "approved_fixed_design",
+      "category": "wall",
+      "bounds_mm": [
+        37320,
+        6160,
+        37440,
+        10260
+      ],
+      "status": "verified",
+      "source": "Owner-confirmed B-D solid background wall with no opening",
+      "display": true,
+      "dimensions_mm": [
+        120,
+        4100
+      ],
+      "height_mm": 2700
+    },
+    {
+      "id": "ceiling_level_1_tea_room",
+      "label": "茶室全域天花2450",
+      "layer": "design_ceiling",
+      "category": "ceiling_control",
+      "bounds_mm": [
+        34240,
+        6160,
+        37440,
+        10260
+      ],
+      "status": "owner_confirmed",
+      "source": "C01 revised by owner: the complete tea room uses the 2450 finished ceiling",
+      "display": false,
+      "dimensions_mm": [
+        3200,
+        4100
+      ],
+      "height_mm": 2450,
+      "coverage": "complete_tea_room_v05_topology"
+    },
+    {
+      "id": "ceiling_level_2_main",
+      "label": "其余室内天花2700",
+      "layer": "design_ceiling",
+      "category": "ceiling_control",
+      "bounds_mm": [
+        18390,
+        0,
+        34240,
+        6160
+      ],
+      "status": "owner_confirmed",
+      "source": "C02 revised by owner: all interior outside the tea room, including the open passage",
+      "display": false,
+      "height_mm": 2700,
+      "coverage": "all_interior_except_tea_room"
+    },
+    {
+      "id": "steel_column_c1",
+      "label": "C1",
+      "layer": "existing_steel_columns",
+      "category": "steel_column",
+      "bounds_mm": [
+        30935,
+        6085,
+        31040,
+        6235
+      ],
+      "status": "owner_confirmed",
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "display": true,
+      "dimensions_mm": [
+        105,
+        150,
+        2700
+      ],
+      "height_mm": 2700,
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
+    },
+    {
+      "id": "steel_column_c2",
+      "label": "C2",
+      "layer": "existing_steel_columns",
+      "category": "steel_column",
+      "bounds_mm": [
+        27700,
+        6085,
+        27805,
+        6235
+      ],
+      "status": "owner_confirmed",
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "display": true,
+      "dimensions_mm": [
+        105,
+        150,
+        2700
+      ],
+      "height_mm": 2700,
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
+    },
+    {
+      "id": "steel_column_c3",
+      "label": "C3",
+      "layer": "existing_steel_columns",
+      "category": "steel_column",
+      "bounds_mm": [
+        23425,
+        6085,
+        23530,
+        6235
+      ],
+      "status": "owner_confirmed",
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "display": true,
+      "dimensions_mm": [
+        105,
+        150,
+        2700
+      ],
+      "height_mm": 2700,
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
+    },
+    {
+      "id": "steel_column_c4",
+      "label": "C4",
+      "layer": "existing_steel_columns",
+      "category": "steel_column",
+      "bounds_mm": [
+        19360,
+        6085,
+        19465,
+        6235
+      ],
+      "status": "owner_confirmed",
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "display": true,
+      "dimensions_mm": [
+        105,
+        150,
+        2700
+      ],
+      "height_mm": 2700,
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
+    }
+  ],
+  "equipment_sequence": [
+    {
+      "id": "E1",
+      "type": "stainless_counter_fridge_1",
+      "length_mm": 1000
+    },
+    {
+      "id": "E2",
+      "type": "stainless_counter_fridge_2_with_electric_stove",
+      "length_mm": 1000
+    },
+    {
+      "id": "E3",
+      "type": "stainless_blank_worktop",
+      "length_mm": 500
+    },
+    {
+      "id": "E4",
+      "type": "stainless_sink_with_glass_rinser",
+      "length_mm": 900
+    },
+    {
+      "id": "E5",
+      "type": "stacked_appliance_rack",
+      "length_mm": 1000
+    }
+  ],
+  "conflicts": [],
+  "superseded_assumptions": [
+    {
+      "id": "v01_east_end_fixed_point_conflict",
+      "replacement": "owner control A-B=6200 composed of 3000 open passage and 3200 shared wall",
+      "status": "superseded"
+    },
+    {
+      "id": "v01_bar_length_5300",
+      "replacement": "owner-corrected bar length 5030 including 800 flip gate",
+      "status": "superseded"
+    },
+    {
+      "id": "v01_provisional_column_mapping",
+      "replacement": "owner-confirmed 4 columns / 3 clear bays / 105x150 section",
+      "status": "superseded"
+    },
+    {
+      "id": "v03_tea_room_rectangle_4100_by_4120",
+      "replacement": "owner-confirmed C-B-D-E topology with C-B=3200 and B-D=4100",
+      "status": "superseded"
+    }
+  ],
+  "design_clashes": [],
+  "resolved_design_decisions": [
+    {
+      "id": "tea_window_head_vs_ceiling",
+      "confirmed_on": "2026-10-11",
+      "status": "owner_confirmed_resolved",
+      "former_window_head_mm": 2750,
+      "former_overlap_mm": 300,
+      "finished_ceiling_mm": 2450,
+      "new_window_head_mm": 2450,
+      "new_window_opening_height_mm": 2100,
+      "upper_infill_z_range_mm": [
+        2450,
+        3020
+      ],
+      "resolution": "extend_upper_wall_down_to_finished_ceiling"
+    }
+  ],
+  "excluded_scope": [
+    "mep_geometry",
+    "loose_furniture",
+    "landscape",
+    "future_glass_geometry",
+    "people_and_soft_furnishings"
+  ]
+}

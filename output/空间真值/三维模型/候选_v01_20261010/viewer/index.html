@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN" data-model-version="v01">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>楼顶空间真值模型 v01</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main id="app" class="app-shell">
+      <aside id="control-panel" class="control-panel" aria-label="模型控制">
+        <header class="panel-header">
+          <div>
+            <p class="eyebrow">TINGFENGJING / ROOFTOP</p>
+            <h1>楼顶空间真值模型</h1>
+          </div>
+          <span class="version-tag">候选 v01</span>
+        </header>
+
+        <section class="panel-section" aria-labelledby="view-heading">
+          <div class="section-heading">
+            <h2 id="view-heading">视角</h2>
+            <span id="camera-label">轴测</span>
+          </div>
+          <div class="view-switcher" role="group" aria-label="预设视角">
+            <button type="button" data-view="plan">俯视</button>
+            <button type="button" data-view="isometric" class="is-active">轴测</button>
+            <button type="button" data-view="V01-R1">V01-R1</button>
+            <button type="button" data-view="V02-R1">V02-R1</button>
+            <button type="button" data-view="ceiling" class="ceiling-view">封顶核验</button>
+          </div>
+        </section>
+
+        <section class="panel-section" aria-labelledby="layer-heading">
+          <div class="section-heading">
+            <h2 id="layer-heading">图层</h2>
+            <span id="layer-count">0 / 0</span>
+          </div>
+          <div id="layer-list" class="layer-list"></div>
+        </section>
+
+        <section class="panel-section object-section" aria-labelledby="object-heading">
+          <div class="section-heading">
+            <h2 id="object-heading">构件</h2>
+            <span id="selection-status">未选择</span>
+          </div>
+          <div id="object-details" class="object-details" aria-live="polite">
+            <p class="empty-selection">未选择构件</p>
+          </div>
+        </section>
+
+        <footer class="panel-footer">
+          <div class="clash-flag">
+            <span aria-hidden="true"></span>
+            <strong>窗顶 / 天花冲突</strong>
+            <b>300 mm</b>
+          </div>
+          <p>非施工放样模型</p>
+        </footer>
+      </aside>
+
+      <section id="viewport" class="viewport" aria-label="三维模型视口">
+        <div class="viewport-toolbar" role="toolbar" aria-label="视口工具">
+          <button id="panel-toggle" class="icon-button" type="button" aria-label="切换控制面板" aria-expanded="true" title="切换控制面板">
+            <img src="./vendor/icons/panel-left.svg" alt="">
+          </button>
+          <span class="toolbar-divider"></span>
+          <button id="fit-button" class="icon-button" type="button" aria-label="模型全景" title="模型全景">
+            <img src="./vendor/icons/maximize.svg" alt="">
+          </button>
+          <button id="reset-button" class="icon-button" type="button" aria-label="重置当前视角" title="重置当前视角">
+            <img src="./vendor/icons/rotate-ccw.svg" alt="">
+          </button>
+        </div>
+        <div id="load-status" class="load-status" role="status">读取模型</div>
+        <div class="axis-key" aria-hidden="true">
+          <span class="axis-x">X</span>
+          <span class="axis-z">Y平面</span>
+          <span class="axis-y">Z高</span>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

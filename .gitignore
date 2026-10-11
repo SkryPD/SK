@@ -4,3 +4,4 @@ tmp/
 __pycache__/
 *.pyc
 output/imagegen/
+tools/rooftop3d-web/node_modules/
