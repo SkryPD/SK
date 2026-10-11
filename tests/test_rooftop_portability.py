@@ -38,6 +38,13 @@ class RooftopPortabilityTests(unittest.TestCase):
 
             self.assertEqual(module.ROOT, fake_root)
 
+    def test_v05_non_destructive_check_uses_a_temporary_sentinel(self) -> None:
+        source = RENDERER_TEST_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn("候选_v03_20261009", source)
+        self.assertIn("TemporaryDirectory", source)
+        self.assertIn("sentinel", source)
+
 
 if __name__ == "__main__":
     unittest.main()

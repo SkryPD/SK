@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from PIL import Image
 
@@ -172,36 +173,53 @@ def test_owner_confirmed_infill_closes_window_at_2450_ceiling() -> None:
 
 def test_v05_render_outputs_are_decodable_versioned_and_non_destructive() -> None:
     module = load_module()
-    module.render_all()
+    with TemporaryDirectory() as temporary_directory:
+        output_root = Path(temporary_directory)
+        previous_candidate = output_root / "existing-candidate"
+        previous_candidate.mkdir()
+        sentinel = previous_candidate / "preserve-me.txt"
+        sentinel.write_text("historical output", encoding="utf-8")
 
-    assert "候选_v05_20261011" in str(module.OUT_DIR)
-    for path in [module.PLAN_OUT, module.ISO_OUT, module.CEILING_OUT]:
-        assert path.exists()
-        with Image.open(path) as image:
-            image.verify()
-        with Image.open(path) as image:
-            assert image.format == "PNG"
-            assert image.mode == "RGB"
-            assert image.width >= 1800
-            assert image.height >= 1000
+        module.OUT_DIR = output_root / "候选_v05_20261011"
+        module.PLAN_OUT = module.OUT_DIR / "01_整层俯视空间控制图_v05.png"
+        module.ISO_OUT = module.OUT_DIR / "02_整层去顶轴测灰模_v05.png"
+        module.CEILING_OUT = module.OUT_DIR / "03_茶室窗洞封顶剖示_v05.png"
+        module.SCENE_JSON = module.OUT_DIR / "楼顶整层灰模_v05_坐标场景.json"
+        module.SURVEY_OUT = module.OUT_DIR / "楼顶整层灰模_v05_待复尺清单.md"
+        module.REPORT_OUT = module.OUT_DIR / "楼顶整层灰模_v05_候选核验报告.md"
 
-    scene = json.loads(module.SCENE_JSON.read_text(encoding="utf-8"))
-    assert scene["version"] == "rooftop-whole-floor-truth-model-v05"
-    assert scene["candidate_status"] == "candidate_window_ceiling_resolved"
-    assert scene["design_clashes"] == []
+        module.render_all()
 
-    for path in [module.SURVEY_OUT, module.REPORT_OUT]:
-        assert path.exists()
-        text = path.read_text(encoding="utf-8")
-        assert "v05" in text
-        assert "不得" in text
-        assert "2450" in text
-        assert "2100" in text
-        assert "user_decision_required" not in text
-        assert "4100×4120" not in text
+        assert "候选_v05_20261011" in str(module.OUT_DIR)
+        for path in [module.PLAN_OUT, module.ISO_OUT, module.CEILING_OUT]:
+            assert path.exists()
+            with Image.open(path) as image:
+                image.verify()
+            with Image.open(path) as image:
+                assert image.format == "PNG"
+                assert image.mode == "RGB"
+                assert image.width >= 1800
+                assert image.height >= 1000
 
-    v03_dir = ROOT / "output" / "空间真值" / "整层灰模" / "候选_v03_20261009"
-    assert (v03_dir / "01_整层俯视空间控制图_v03.png").exists()
+        scene = json.loads(module.SCENE_JSON.read_text(encoding="utf-8"))
+        assert scene["version"] == "rooftop-whole-floor-truth-model-v05"
+        assert scene["candidate_status"] == "candidate_window_ceiling_resolved"
+        assert scene["design_clashes"] == []
+
+        for path in [module.SURVEY_OUT, module.REPORT_OUT]:
+            assert path.exists()
+            text = path.read_text(encoding="utf-8")
+            assert "v05" in text
+            assert "不得" in text
+            assert "2450" in text
+            assert "2100" in text
+            assert "user_decision_required" not in text
+            assert "4100×4120" not in text
+
+        report = module.REPORT_OUT.read_text(encoding="utf-8")
+        assert "requires_site_measurement" in report
+        assert "| `uncertain` |" not in report
+        assert sentinel.read_text(encoding="utf-8") == "historical output"
 
 
 if __name__ == "__main__":
