@@ -7,6 +7,12 @@ import {
   validateModel,
   V04_SOURCE_PATH,
 } from "../src/rooftop3d/model.mjs";
+import { MATERIAL_DEFINITIONS } from "../src/rooftop3d/three-scene.mjs";
+
+test("exported ceiling material stays at the v02 baseline", () => {
+  assert.equal(MATERIAL_DEFINITIONS.ceiling_plane_owner_confirmed.color, 0xd8c990);
+  assert.equal(MATERIAL_DEFINITIONS.ceiling_plane_owner_confirmed.opacity, 0.28);
+});
 
 test("v05 truth scene builds the owner-confirmed sealed-window geometry contract", () => {
   const source = loadTruthScene();

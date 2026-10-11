@@ -2,6 +2,7 @@ import * as THREE from "./vendor/three.module.js";
 import { OrbitControls } from "./vendor/OrbitControls.js";
 import { GLTFLoader } from "./vendor/GLTFLoader.js";
 import { fitDistanceForBounds } from "./camera.mjs";
+import { setLayerVisibility } from "./layers.mjs";
 
 const MODEL_VERSION = document.documentElement.dataset.modelVersion || "v02";
 const MODEL_URL = `../rooftop_truth_model_${MODEL_VERSION}.glb`;
@@ -27,6 +28,7 @@ const VIEW_LABELS = {
   isometric: "轴测",
   "V01-R1": "V01-R1",
   "V02-R1": "V02-R1",
+  ceiling: "封顶核验",
 };
 
 const app = document.querySelector("#app");
@@ -41,6 +43,7 @@ const panelToggle = document.querySelector("#panel-toggle");
 const fitButton = document.querySelector("#fit-button");
 const resetButton = document.querySelector("#reset-button");
 const viewButtons = [...document.querySelectorAll("[data-view]")];
+const layerControls = new Map();
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -121,11 +124,44 @@ function setPerspectivePose(position, target, fov = 48) {
   controls.update();
 }
 
+function setCeilingPose() {
+  const ceilingLayer = layerControls.get("design_ceiling")?.layer;
+  if (!ceilingLayer) {
+    return;
+  }
+  const ceilingBounds = new THREE.Box3().setFromObject(ceilingLayer);
+  const ceilingSize = ceilingBounds.getSize(new THREE.Vector3());
+  ceilingSize.y = Math.max(ceilingSize.y, modelSize.y, 1);
+  const target = ceilingBounds.getCenter(new THREE.Vector3());
+  target.y = Math.min(target.y, modelCenter.y * 0.9);
+  const direction = new THREE.Vector3(1, 1.29, 0.94).normalize();
+  const distance = fitDistanceForBounds(ceilingSize, 42, viewportAspect(), 1.16);
+  const position = target.clone().addScaledVector(direction, distance);
+  setPerspectivePose(position.toArray(), target.toArray(), 42);
+}
+
+function styleCeilingLayer() {
+  const ceilingLayer = modelRoot.getObjectByName("design_ceiling");
+  ceilingLayer?.traverse((object) => {
+    if (!object.isMesh) {
+      return;
+    }
+    const material = object.material.clone();
+    material.color.set(0xb8ada0);
+    material.opacity = 0.62;
+    material.transparent = true;
+    material.depthWrite = false;
+    material.needsUpdate = true;
+    object.material = material;
+  });
+}
+
 function applyPreset(name) {
   if (!modelRoot) {
     return;
   }
   currentView = name;
+  setLayerChecked("design_ceiling", name === "ceiling");
   if (name === "plan") {
     switchCamera(orthographicCamera);
     setOrthographicFrustum();
@@ -137,6 +173,8 @@ function applyPreset(name) {
     setPerspectivePose([34.15, 1.62, 3.64], [23.8, 1.35, 3.75], 56);
   } else if (name === "V02-R1") {
     setPerspectivePose([24.6, 1.62, 3.05], [35.55, 1.2, 3.68], 55);
+  } else if (name === "ceiling") {
+    setCeilingPose();
   } else {
     const target = new THREE.Vector3(modelCenter.x, modelCenter.y * 0.45, modelCenter.z);
     const direction = new THREE.Vector3(1, 0.72, 0.85).normalize();
@@ -163,6 +201,17 @@ function updateLayerCount() {
   layerCount.textContent = `${checkboxes.filter((item) => item.checked).length} / ${checkboxes.length}`;
 }
 
+function setLayerChecked(layerId, checked) {
+  const control = layerControls.get(layerId);
+  if (!control) {
+    return;
+  }
+  control.checkbox.checked = checked;
+  control.row.dataset.visible = String(checked);
+  setLayerVisibility(control.layer, checked);
+  updateLayerCount();
+}
+
 function buildLayerControls() {
   const fragment = document.createDocumentFragment();
   const layers = [];
@@ -175,13 +224,15 @@ function buildLayerControls() {
     const row = document.createElement("label");
     row.className = "layer-row";
     row.dataset.status = layer.userData.status || "";
+    row.dataset.layerId = layer.name;
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = layer.userData.default_visible !== false;
-    layer.visible = checkbox.checked;
+    layerControls.set(layer.name, { layer, checkbox, row });
+    setLayerVisibility(layer, checkbox.checked);
+    row.dataset.visible = String(checkbox.checked);
     checkbox.addEventListener("change", () => {
-      layer.visible = checkbox.checked;
-      updateLayerCount();
+      setLayerChecked(layer.name, checkbox.checked);
     });
     const name = document.createElement("span");
     name.textContent = LAYER_LABELS[layer.name] || layer.name;
@@ -292,6 +343,9 @@ function resize() {
   perspectiveCamera.aspect = width / height;
   perspectiveCamera.updateProjectionMatrix();
   setOrthographicFrustum();
+  if (currentView === "ceiling" && modelRoot) {
+    setCeilingPose();
+  }
 }
 
 window.addEventListener("resize", resize);
@@ -305,6 +359,7 @@ new GLTFLoader().load(
   (gltf) => {
     modelRoot = gltf.scene;
     scene.add(modelRoot);
+    styleCeilingLayer();
     modelBounds.setFromObject(modelRoot);
     modelBounds.getCenter(modelCenter);
     modelBounds.getSize(modelSize);

@@ -34,6 +34,7 @@ async function buildViewer(outDir) {
     [resolve(VIEWER_SOURCE_DIR, "styles.css"), resolve(viewerDir, "styles.css")],
     [resolve(VIEWER_SOURCE_DIR, "app.js"), resolve(viewerDir, "app.js")],
     [resolve(VIEWER_SOURCE_DIR, "camera.mjs"), resolve(viewerDir, "camera.mjs")],
+    [resolve(VIEWER_SOURCE_DIR, "layers.mjs"), resolve(viewerDir, "layers.mjs")],
     [resolve(THREE_PACKAGE_DIR, "build/three.module.js"), resolve(vendorDir, "three.module.js")],
     [resolve(THREE_PACKAGE_DIR, "build/three.core.js"), resolve(vendorDir, "three.core.js")],
     [resolve(THREE_PACKAGE_DIR, "examples/jsm/controls/OrbitControls.js"), resolve(vendorDir, "OrbitControls.js")],
