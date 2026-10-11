@@ -1,14 +1,23 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import tempfile
 import unittest
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER_PATH = ROOT / "tmp" / "geometry" / "render_rooftop_whole_floor_truth_model_v05.py"
 RENDERER_TEST_PATH = ROOT / "tmp" / "geometry" / "test_render_rooftop_whole_floor_truth_model_v05.py"
+V04_SCENE_PATH = (
+    ROOT
+    / "output"
+    / "空间真值"
+    / "整层灰模"
+    / "候选_v04_20261010"
+    / "楼顶整层灰模_v04_坐标场景.json"
+)
 
 
 def load_module(path: Path):
@@ -20,6 +29,16 @@ def load_module(path: Path):
 
 
 class RooftopPortabilityTests(unittest.TestCase):
+    def test_historical_v04_scene_is_repository_portable(self) -> None:
+        self.assertTrue(V04_SCENE_PATH.is_file(), "v01 rebuild input must be versioned")
+
+        scene = json.loads(V04_SCENE_PATH.read_text(encoding="utf-8"))
+        absolute_authorities = [
+            entry for entry in scene["authority"] if PureWindowsPath(entry).is_absolute()
+        ]
+
+        self.assertEqual(absolute_authorities, [])
+
     def test_v05_files_do_not_embed_the_owner_workstation_path(self) -> None:
         for path in (RENDERER_PATH, RENDERER_TEST_PATH):
             with self.subTest(path=path.name):
