@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(r"C:\Users\SkryPD\Documents\ChatGPT\听风径民宿装修方向")
+ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "output" / "空间真值" / "整层灰模" / "候选_v05_20261011"
 PLAN_OUT = OUT_DIR / "01_整层俯视空间控制图_v05.png"
 ISO_OUT = OUT_DIR / "02_整层去顶轴测灰模_v05.png"
@@ -367,6 +367,7 @@ def scene_spec() -> dict:
             label="茶室窗下墙",
             dimensions_mm=[200, 3220],
             height_mm=350,
+            plan_offset_status="requires_site_measurement",
         ),
         _object(
             "tea_window_head_wall",
@@ -382,6 +383,7 @@ def scene_spec() -> dict:
             z_max_mm=3020,
             former_z_mm=2750,
             resolved_infill_mm=300,
+            plan_offset_status="requires_site_measurement",
         ),
         _object(
             "tea_room_only_window",

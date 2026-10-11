@@ -52,6 +52,17 @@ test("v05 truth scene builds the owner-confirmed sealed-window geometry contract
   assert.equal(byId.get("tea_room_only_window").z_max_mm, 2450);
   assert.equal(byId.get("tea_window_head_wall").z_min_mm, 2450);
   assert.equal(byId.get("tea_window_head_wall").z_max_mm, 3020);
+  for (const id of [
+    "tea_window_sill_wall",
+    "tea_window_head_wall",
+    "tea_room_only_window",
+  ]) {
+    assert.equal(
+      byId.get(id).metadata.plan_offset_status,
+      "requires_site_measurement",
+      `${id} must preserve its unmeasured plan offset`,
+    );
+  }
   assert.deepEqual(model.clashes, []);
   assert.equal(model.resolved_design_decisions[0].id, "tea_window_head_vs_ceiling");
   assert.equal(model.resolved_design_decisions[0].status, "owner_confirmed_resolved");

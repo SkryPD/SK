@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 
 
-ROOT = Path(r"C:\Users\SkryPD\Documents\ChatGPT\听风径民宿装修方向")
+ROOT = Path(__file__).resolve().parents[2]
 MODULE_PATH = ROOT / "tmp" / "geometry" / "render_rooftop_whole_floor_truth_model_v05.py"
 
 
@@ -130,6 +130,9 @@ def test_owner_confirmed_infill_closes_window_at_2450_ceiling() -> None:
     assert window["top_to_eave_underside_mm"] == 570
     assert window["plan_offset_status"] == "requires_site_measurement"
 
+    sill_wall = objects["tea_window_sill_wall"]
+    assert sill_wall["plan_offset_status"] == "requires_site_measurement"
+
     head_wall = objects["tea_window_head_wall"]
     assert head_wall["bounds_mm"] == [34240, 6600, 34440, 9820]
     assert head_wall["dimensions_mm"] == [200, 3220]
@@ -137,6 +140,7 @@ def test_owner_confirmed_infill_closes_window_at_2450_ceiling() -> None:
     assert head_wall["height_mm"] == 570
     assert head_wall["z_max_mm"] == 3020
     assert head_wall["resolved_infill_mm"] == 300
+    assert head_wall["plan_offset_status"] == "requires_site_measurement"
 
     assert scene["floor_levels_mm"] == {
         "public_interior": 0,

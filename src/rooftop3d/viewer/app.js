@@ -271,6 +271,14 @@ function showObjectDetails(object) {
   addDetailRow(list, "编号", data.id || object.name);
   addDetailRow(list, "尺寸", dimensions);
   addDetailRow(list, "状态", STATUS_LABELS[data.status] || data.status, data.status);
+  if (data.plan_offset_status) {
+    addDetailRow(
+      list,
+      "平面定位",
+      STATUS_LABELS[data.plan_offset_status] || data.plan_offset_status,
+      data.plan_offset_status,
+    );
+  }
   addDetailRow(list, "图层", LAYER_LABELS[data.layer] || data.layer);
   addDetailRow(list, "依据", data.source);
   objectDetails.replaceChildren(title, list);

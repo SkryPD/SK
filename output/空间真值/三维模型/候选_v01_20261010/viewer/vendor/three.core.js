@@ -2179,7 +2179,7 @@ const ReversedDepthFuncs = {
  * Code Example:
  * ```js
  * class Car extends EventDispatcher {
- * 	start() {
+ *	start() {
  *		this.dispatchEvent( { type: 'start', message: 'vroom vroom!' } );
  *	}
  *};
@@ -2187,7 +2187,7 @@ const ReversedDepthFuncs = {
  * // Using events with the custom object
  * const car = new Car();
  * car.addEventListener( 'start', function ( event ) {
- * 	alert( event.message );
+ *	alert( event.message );
  * } );
  *
  * car.start();
@@ -9863,7 +9863,7 @@ class Data3DTexture extends Texture {
 		// Users can still set in Data3DTexture directly.
 		//
 		//	const texture = new THREE.Data3DTexture( data, width, height, depth );
-		// 	texture.anisotropy = 16;
+		//	texture.anisotropy = 16;
 		//
 		// See #14839
 
@@ -11182,9 +11182,9 @@ class Matrix4 {
 
 		}
 
-		te[ 0 ] = x;	te[ 4 ] = 0;	te[ 8 ] = a; 	te[ 12 ] = 0;
-		te[ 1 ] = 0;	te[ 5 ] = y;	te[ 9 ] = b; 	te[ 13 ] = 0;
-		te[ 2 ] = 0;	te[ 6 ] = 0;	te[ 10 ] = c; 	te[ 14 ] = d;
+		te[ 0 ] = x;	te[ 4 ] = 0;	te[ 8 ] = a;	te[ 12 ] = 0;
+		te[ 1 ] = 0;	te[ 5 ] = y;	te[ 9 ] = b;	te[ 13 ] = 0;
+		te[ 2 ] = 0;	te[ 6 ] = 0;	te[ 10 ] = c;	te[ 14 ] = d;
 		te[ 3 ] = 0;	te[ 7 ] = 0;	te[ 11 ] = -1;	te[ 15 ] = 0;
 
 		return this;
@@ -11242,10 +11242,10 @@ class Matrix4 {
 
 		}
 
-		te[ 0 ] = x;		te[ 4 ] = 0;		te[ 8 ] = 0; 		te[ 12 ] = a;
-		te[ 1 ] = 0; 		te[ 5 ] = y;		te[ 9 ] = 0; 		te[ 13 ] = b;
-		te[ 2 ] = 0; 		te[ 6 ] = 0;		te[ 10 ] = c;		te[ 14 ] = d;
-		te[ 3 ] = 0; 		te[ 7 ] = 0;		te[ 11 ] = 0;		te[ 15 ] = 1;
+		te[ 0 ] = x;		te[ 4 ] = 0;		te[ 8 ] = 0;		te[ 12 ] = a;
+		te[ 1 ] = 0;		te[ 5 ] = y;		te[ 9 ] = 0;		te[ 13 ] = b;
+		te[ 2 ] = 0;		te[ 6 ] = 0;		te[ 10 ] = c;		te[ 14 ] = d;
+		te[ 3 ] = 0;		te[ 7 ] = 0;		te[ 11 ] = 0;		te[ 15 ] = 1;
 
 		return this;
 
@@ -18390,13 +18390,13 @@ const _vector$9 = /*@__PURE__*/ new Vector3();
  * // create a simple square shape. We duplicate the top left and bottom right
  * // vertices because each vertex needs to appear once per triangle.
  * const vertices = new Float32Array( [
- * 	-1.0, -1.0,  1.0, // v0
- * 	 1.0, -1.0,  1.0, // v1
- * 	 1.0,  1.0,  1.0, // v2
+ *	-1.0, -1.0,  1.0, // v0
+ *	 1.0, -1.0,  1.0, // v1
+ *	 1.0,  1.0,  1.0, // v2
  *
- * 	 1.0,  1.0,  1.0, // v3
- * 	-1.0,  1.0,  1.0, // v4
- * 	-1.0, -1.0,  1.0  // v5
+ *	 1.0,  1.0,  1.0, // v3
+ *	-1.0,  1.0,  1.0, // v4
+ *	-1.0, -1.0,  1.0  // v5
  * ] );
  * // itemSize = 3 because there are 3 values (components) per vertex
  * geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
@@ -22692,9 +22692,9 @@ const _v2$1 = /*@__PURE__*/ new Vector3();
  * //Create spheres with 3 levels of detail and create new LOD levels for them
  * for( let i = 0; i < 3; i++ ) {
  *
- * 	const geometry = new THREE.IcosahedronGeometry( 10, 3 - i );
- * 	const mesh = new THREE.Mesh( geometry, material );
- * 	lod.addLevel( mesh, i * 75 );
+ *	const geometry = new THREE.IcosahedronGeometry( 10, 3 - i );
+ *	const mesh = new THREE.Mesh( geometry, material );
+ *	lod.addLevel( mesh, i * 75 );
  *
  * }
  *
@@ -27511,9 +27511,9 @@ class BatchedMesh extends Mesh {
 	 * @param {number} geometryId - The id of the geometry to get the range of.
 	 * @param {Object} [target] - The target object that is used to store the method's result.
 	 * @return {{
-	 * 	vertexStart:number,vertexCount:number,reservedVertexCount:number,
-	 * 	indexStart:number,indexCount:number,reservedIndexCount:number,
-	 * 	start:number,count:number
+	 *	vertexStart:number,vertexCount:number,reservedVertexCount:number,
+	 *	indexStart:number,indexCount:number,reservedIndexCount:number,
+	 *	start:number,count:number
 	 * }} The result object with range data.
 	 */
 	getGeometryRangeAt( geometryId, target = {} ) {
@@ -28536,11 +28536,11 @@ class LineLoop extends Line {
  * const vertices = [];
  *
  * for ( let i = 0; i < 10000; i ++ ) {
- * 	const x = THREE.MathUtils.randFloatSpread( 2000 );
- * 	const y = THREE.MathUtils.randFloatSpread( 2000 );
- * 	const z = THREE.MathUtils.randFloatSpread( 2000 );
+ *	const x = THREE.MathUtils.randFloatSpread( 2000 );
+ *	const y = THREE.MathUtils.randFloatSpread( 2000 );
+ *	const z = THREE.MathUtils.randFloatSpread( 2000 );
  *
- * 	vertices.push( x, y, z );
+ *	vertices.push( x, y, z );
  * }
  *
  * const geometry = new THREE.BufferGeometry();
@@ -29409,7 +29409,7 @@ class CompressedCubeTexture extends CompressedTexture {
  * loader.setPath( 'textures/cube/pisa/' );
  *
  * const textureCube = loader.load( [
- * 	'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'
+ *	'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'
  * ] );
  *
  * const material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } );
@@ -31157,18 +31157,18 @@ class DodecahedronGeometry extends PolyhedronGeometry {
 		];
 
 		const indices = [
-			3, 11, 7, 	3, 7, 15, 	3, 15, 13,
-			7, 19, 17, 	7, 17, 6, 	7, 6, 15,
-			17, 4, 8, 	17, 8, 10, 	17, 10, 6,
-			8, 0, 16, 	8, 16, 2, 	8, 2, 10,
-			0, 12, 1, 	0, 1, 18, 	0, 18, 16,
-			6, 10, 2, 	6, 2, 13, 	6, 13, 15,
-			2, 16, 18, 	2, 18, 3, 	2, 3, 13,
-			18, 1, 9, 	18, 9, 11, 	18, 11, 3,
-			4, 14, 12, 	4, 12, 0, 	4, 0, 8,
-			11, 9, 5, 	11, 5, 19, 	11, 19, 7,
-			19, 5, 14, 	19, 14, 4, 	19, 4, 17,
-			1, 12, 14, 	1, 14, 5, 	1, 5, 9
+			3, 11, 7,	3, 7, 15,	3, 15, 13,
+			7, 19, 17,	7, 17, 6,	7, 6, 15,
+			17, 4, 8,	17, 8, 10,	17, 10, 6,
+			8, 0, 16,	8, 16, 2,	8, 2, 10,
+			0, 12, 1,	0, 1, 18,	0, 18, 16,
+			6, 10, 2,	6, 2, 13,	6, 13, 15,
+			2, 16, 18,	2, 18, 3,	2, 3, 13,
+			18, 1, 9,	18, 9, 11,	18, 11, 3,
+			4, 14, 12,	4, 12, 0,	4, 0, 8,
+			11, 9, 5,	11, 5, 19,	11, 19, 7,
+			19, 5, 14,	19, 14, 4,	19, 4, 17,
+			1, 12, 14,	1, 14, 5,	1, 5, 9
 		];
 
 		super( vertices, indices, radius, detail );
@@ -31891,11 +31891,11 @@ class Curve {
  *
  * ```js
  * const curve = new THREE.EllipseCurve(
- * 	0, 0,
- * 	10, 10,
- * 	0, 2 * Math.PI,
- * 	false,
- * 	0
+ *	0, 0,
+ *	10, 10,
+ *	0, 2 * Math.PI,
+ *	false,
+ *	0
  * );
  *
  * const points = curve.getPoints( 50 );
@@ -32264,11 +32264,11 @@ const pz = /*@__PURE__*/ new CubicPoly();
  * ```js
  * //Create a closed wavey loop
  * const curve = new THREE.CatmullRomCurve3( [
- * 	new THREE.Vector3( -10, 0, 10 ),
- * 	new THREE.Vector3( -5, 5, 5 ),
- * 	new THREE.Vector3( 0, 0, 0 ),
- * 	new THREE.Vector3( 5, -5, 5 ),
- * 	new THREE.Vector3( 10, 0, 10 )
+ *	new THREE.Vector3( -10, 0, 10 ),
+ *	new THREE.Vector3( -5, 5, 5 ),
+ *	new THREE.Vector3( 0, 0, 0 ),
+ *	new THREE.Vector3( 5, -5, 5 ),
+ *	new THREE.Vector3( 10, 0, 10 )
  * ] );
  *
  * const points = curve.getPoints( 50 );
@@ -32614,10 +32614,10 @@ function CubicBezier( t, p0, p1, p2, p3 ) {
  *
  * ```js
  * const curve = new THREE.CubicBezierCurve(
- * 	new THREE.Vector2( - 0, 0 ),
- * 	new THREE.Vector2( - 5, 15 ),
- * 	new THREE.Vector2( 20, 15 ),
- * 	new THREE.Vector2( 10, 0 )
+ *	new THREE.Vector2( - 0, 0 ),
+ *	new THREE.Vector2( - 5, 15 ),
+ *	new THREE.Vector2( 20, 15 ),
+ *	new THREE.Vector2( 10, 0 )
  * );
  *
  * const points = curve.getPoints( 50 );
@@ -33126,9 +33126,9 @@ class LineCurve3 extends Curve {
  *
  * ```js
  * const curve = new THREE.QuadraticBezierCurve(
- * 	new THREE.Vector2( - 10, 0 ),
- * 	new THREE.Vector2( 20, 15 ),
- * 	new THREE.Vector2( 10, 0 )
+ *	new THREE.Vector2( - 10, 0 ),
+ *	new THREE.Vector2( 20, 15 ),
+ *	new THREE.Vector2( 10, 0 )
  * )
  *
  * const points = curve.getPoints( 50 );
@@ -33368,11 +33368,11 @@ class QuadraticBezierCurve3 extends Curve {
  * ```js
  * // Create a sine-like wave
  * const curve = new THREE.SplineCurve( [
- * 	new THREE.Vector2( -10, 0 ),
- * 	new THREE.Vector2( -5, 5 ),
- * 	new THREE.Vector2( 0, 0 ),
- * 	new THREE.Vector2( 5, -5 ),
- * 	new THREE.Vector2( 10, 0 )
+ *	new THREE.Vector2( -10, 0 ),
+ *	new THREE.Vector2( -5, 5 ),
+ *	new THREE.Vector2( 0, 0 ),
+ *	new THREE.Vector2( 5, -5 ),
+ *	new THREE.Vector2( 10, 0 )
  * ] );
  *
  * const points = curve.getPoints( 50 );
@@ -34143,12 +34143,12 @@ class Path extends CurvePath {
  * heartShape.bezierCurveTo( 35, 0, 25, 25, 25, 25 );
  *
  * const extrudeSettings = {
- * 	depth: 8,
- * 	bevelEnabled: true,
- * 	bevelSegments: 2,
- * 	steps: 2,
- * 	bevelSize: 1,
- * 	bevelThickness: 1
+ *	depth: 8,
+ *	bevelEnabled: true,
+ *	bevelSegments: 2,
+ *	steps: 2,
+ *	bevelSize: 1,
+ *	bevelThickness: 1
  * };
  *
  * const geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
@@ -35968,16 +35968,16 @@ class IcosahedronGeometry extends PolyhedronGeometry {
 		const t = ( 1 + Math.sqrt( 5 ) ) / 2;
 
 		const vertices = [
-			-1, t, 0, 	1, t, 0, 	-1, - t, 0, 	1, - t, 0,
-			0, -1, t, 	0, 1, t,	0, -1, - t, 	0, 1, - t,
-			t, 0, -1, 	t, 0, 1, 	- t, 0, -1, 	- t, 0, 1
+			-1, t, 0,	1, t, 0,	-1, - t, 0,	1, - t, 0,
+			0, -1, t,	0, 1, t,	0, -1, - t,	0, 1, - t,
+			t, 0, -1,	t, 0, 1,	- t, 0, -1,	- t, 0, 1
 		];
 
 		const indices = [
-			0, 11, 5, 	0, 5, 1, 	0, 1, 7, 	0, 7, 10, 	0, 10, 11,
-			1, 5, 9, 	5, 11, 4,	11, 10, 2,	10, 7, 6,	7, 1, 8,
-			3, 9, 4, 	3, 4, 2,	3, 2, 6,	3, 6, 8,	3, 8, 9,
-			4, 9, 5, 	2, 4, 11,	6, 2, 10,	8, 6, 7,	9, 8, 1
+			0, 11, 5,	0, 5, 1,	0, 1, 7,	0, 7, 10,	0, 10, 11,
+			1, 5, 9,	5, 11, 4,	11, 10, 2,	10, 7, 6,	7, 1, 8,
+			3, 9, 4,	3, 4, 2,	3, 2, 6,	3, 6, 8,	3, 8, 9,
+			4, 9, 5,	2, 4, 11,	6, 2, 10,	8, 6, 7,	9, 8, 1
 		];
 
 		super( vertices, indices, radius, detail );
@@ -36019,7 +36019,7 @@ class IcosahedronGeometry extends PolyhedronGeometry {
  * ```js
  * const points = [];
  * for ( let i = 0; i < 10; i ++ ) {
- * 	points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
+ *	points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 10 + 5, ( i - 5 ) * 2 ) );
  * }
  * const geometry = new THREE.LatheGeometry( points );
  * const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
@@ -36259,8 +36259,8 @@ class OctahedronGeometry extends PolyhedronGeometry {
 	constructor( radius = 1, detail = 0 ) {
 
 		const vertices = [
-			1, 0, 0, 	-1, 0, 0,	0, 1, 0,
-			0, -1, 0, 	0, 0, 1,	0, 0, -1
+			1, 0, 0,	-1, 0, 0,	0, 1, 0,
+			0, -1, 0,	0, 0, 1,	0, 0, -1
 		];
 
 		const indices = [
@@ -37014,11 +37014,11 @@ class TetrahedronGeometry extends PolyhedronGeometry {
 	constructor( radius = 1, detail = 0 ) {
 
 		const vertices = [
-			1, 1, 1, 	-1, -1, 1, 	-1, 1, -1, 	1, -1, -1
+			1, 1, 1,	-1, -1, 1,	-1, 1, -1,	1, -1, -1
 		];
 
 		const indices = [
-			2, 1, 0, 	0, 3, 2,	1, 3, 0,	2, 3, 1
+			2, 1, 0,	0, 3, 2,	1, 3, 0,	2, 3, 1
 		];
 
 		super( vertices, indices, radius, detail );
@@ -37417,14 +37417,14 @@ class TorusKnotGeometry extends BufferGeometry {
  * ```js
  * class CustomSinCurve extends THREE.Curve {
  *
- * 	getPoint( t, optionalTarget = new THREE.Vector3() ) {
+ *	getPoint( t, optionalTarget = new THREE.Vector3() ) {
  *
- * 		const tx = t * 3 - 1.5;
- * 		const ty = Math.sin( 2 * Math.PI * t );
- * 		const tz = 0;
+ *		const tx = t * 3 - 1.5;
+ *		const ty = Math.sin( 2 * Math.PI * t );
+ *		const tz = 0;
  *
- * 		return optionalTarget.set( tx, ty, tz );
- * 	}
+ *		return optionalTarget.set( tx, ty, tz );
+ *	}
  *
  * }
  *
@@ -38116,12 +38116,12 @@ var default_fragment = "void main() {\n\tgl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0
  *
  * ```js
  * const material = new THREE.ShaderMaterial( {
- * 	uniforms: {
- * 		time: { value: 1.0 },
- * 		resolution: { value: new THREE.Vector2() }
- * 	},
- * 	vertexShader: document.getElementById( 'vertexShader' ).textContent,
- * 	fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+ *	uniforms: {
+ *		time: { value: 1.0 },
+ *		resolution: { value: new THREE.Vector2() }
+ *	},
+ *	vertexShader: document.getElementById( 'vertexShader' ).textContent,
+ *	fragmentShader: document.getElementById( 'fragmentShader' ).textContent
  * } );
  * ```
  *
@@ -38159,8 +38159,8 @@ class ShaderMaterial extends Material {
 		 * yields another directive.
 		 * ```js
 		 * defines: {
-		 * 	FOO: 15,
-		 * 	BAR: true
+		 *	FOO: 15,
+		 *	BAR: true
 		 * }
 		 * ```
 		 * Yields the lines:
@@ -38177,15 +38177,15 @@ class ShaderMaterial extends Material {
 		 * An object of the form:
 		 * ```js
 		 * {
-		 * 	"uniform1": { value: 1.0 },
-		 * 	"uniform2": { value: 2 }
+		 *	"uniform1": { value: 1.0 },
+		 *	"uniform2": { value: 2 }
 		 * }
 		 * ```
 		 * specifying the uniforms to be passed to the shader code; keys are uniform
 		 * names, values are definitions of the form
 		 * ```
 		 * {
-		 * 	value: 1.0
+		 *	value: 1.0
 		 * }
 		 * ```
 		 * where `value` is the value of the uniform. Names must match the name of
@@ -41631,10 +41631,10 @@ class MeshMatcapMaterial extends Material {
  *
  * ```js
  * const material = new THREE.LineDashedMaterial( {
- * 	color: 0xffffff,
- * 	scale: 1,
- * 	dashSize: 3,
- * 	gapSize: 1,
+ *	color: 0xffffff,
+ *	scale: 1,
+ *	dashSize: 3,
+ *	gapSize: 1,
  * } );
  * ```
  *
@@ -42322,7 +42322,7 @@ class Interpolant {
 					//- See http://jsperf.com/comparison-to-undefined/3
 					//- slower code:
 					//-
-					//- 				if ( t >= t1 || t1 === undefined ) {
+					//-				if ( t >= t1 || t1 === undefined ) {
 					forward_scan: if ( ! ( t < t1 ) ) {
 
 						for ( let giveUpAt = i1 + 2; ; ) {
@@ -42655,7 +42655,7 @@ class CubicInterpolant extends Interpolant {
 			stride = this.valueSize,
 
 			o1 = i1 * stride,		o0 = o1 - stride,
-			oP = this._offsetPrev, 	oN = this._offsetNext,
+			oP = this._offsetPrev,	oN = this._offsetNext,
 			wP = this._weightPrev,	wN = this._weightNext,
 
 			p = ( t - t0 ) / ( t1 - t0 ),
@@ -44616,9 +44616,9 @@ class LoadingManager {
 		 * const objectURLs = [];
 		 * manager.setURLModifier( ( url ) => {
 		 *
-		 * 	url = URL.createObjectURL( blobs[ url ] );
-		 * 	objectURLs.push( url );
-		 * 	return url;
+		 *	url = URL.createObjectURL( blobs[ url ] );
+		 *	objectURLs.push( url );
+		 *	return url;
 		 *
 		 * } );
 		 *
@@ -44626,8 +44626,8 @@ class LoadingManager {
 		 * const loader = new GLTFLoader( manager );
 		 * loader.load( 'fish.gltf', (gltf) => {
 		 *
-		 * 	scene.add( gltf.scene );
-		 * 	objectURLs.forEach( ( url ) => URL.revokeObjectURL( url ) );
+		 *	scene.add( gltf.scene );
+		 *	objectURLs.forEach( ( url ) => URL.revokeObjectURL( url ) );
 		 *
 		 * } );
 		 * ```
@@ -45761,7 +45761,7 @@ class ImageLoader extends Loader {
  * ```js
  * const loader = new THREE.CubeTextureLoader().setPath( 'textures/cubeMaps/' );
  * const cubeTexture = await loader.loadAsync( [
- * 	'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'
+ *	'px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'
  * ] );
  * scene.background = cubeTexture;
  * ```
@@ -49954,7 +49954,7 @@ class ObjectLoader extends Loader {
 			case 'SkinnedMesh':
 
 				geometry = getGeometry( data.geometry );
-			 	material = getMaterial( data.material );
+				material = getMaterial( data.material );
 
 				object = new SkinnedMesh( geometry, material );
 
@@ -51516,10 +51516,10 @@ class AudioListener extends Object3D {
  * // load a sound and set it as the Audio object's buffer
  * const audioLoader = new THREE.AudioLoader();
  * audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
- * 	sound.setBuffer( buffer );
- * 	sound.setLoop( true );
- * 	sound.setVolume( 0.5 );
- * 	sound.play();
+ *	sound.setBuffer( buffer );
+ *	sound.setLoop( true );
+ *	sound.setVolume( 0.5 );
+ *	sound.play();
  * });
  * ```
  *
@@ -52293,9 +52293,9 @@ const _orientation = /*@__PURE__*/ new Vector3();
  * // load a sound and set it as the PositionalAudio object's buffer
  * const audioLoader = new THREE.AudioLoader();
  * audioLoader.load( 'sounds/song.ogg', function( buffer ) {
- * 	sound.setBuffer( buffer );
- * 	sound.setRefDistance( 20 );
- * 	sound.play();
+ *	sound.setBuffer( buffer );
+ *	sound.setRefDistance( 20 );
+ *	sound.play();
  * });
  *
  * // create an object for the sound to play from
@@ -52536,10 +52536,10 @@ class PositionalAudio extends Audio {
  * // load a sound and set it as the Audio object's buffer
  * const audioLoader = new THREE.AudioLoader();
  * audioLoader.load( 'sounds/ambient.ogg', function( buffer ) {
- * 	sound.setBuffer( buffer );
- * 	sound.setLoop(true);
- * 	sound.setVolume(0.5);
- * 	sound.play();
+ *	sound.setBuffer( buffer );
+ *	sound.setLoop(true);
+ *	sound.setVolume(0.5);
+ *	sound.play();
  * });
  *
  * // create an AudioAnalyser, passing in the sound and desired fftSize
@@ -55348,8 +55348,8 @@ class AnimationMixer extends EventDispatcher {
 		this._actionsByClip = {};
 		// inside:
 		// {
-		// 	knownActions: Array< AnimationAction > - used as prototypes
-		// 	actionByRoot: AnimationAction - lookup
+		//	knownActions: Array< AnimationAction > - used as prototypes
+		//	actionByRoot: AnimationAction - lookup
 		// }
 
 
@@ -56055,8 +56055,8 @@ class RenderTarget3D extends RenderTarget {
  * When declaring a uniform of a {@link ShaderMaterial}, it is declared by value or by object.
  * ```js
  * uniforms: {
- * 	time: { value: 1.0 },
- * 	resolution: new Uniform( new Vector2() )
+ *	time: { value: 1.0 },
+ *	resolution: new Uniform( new Vector2() )
  * };
  * ```
  * Since this class can only be used in context of {@link ShaderMaterial}, it is only supported
@@ -56582,11 +56582,11 @@ class Raycaster {
 		 *
 		 * ```
 		 * {
-		 * 	Mesh: {},
-		 * 	Line: { threshold: 1 },
-		 * 	LOD: {},
-		 * 	Points: { threshold: 1 },
-		 * 	Sprite: {}
+		 *	Mesh: {},
+		 *	Line: { threshold: 1 },
+		 *	LOD: {},
+		 *	Points: { threshold: 1 },
+		 *	Sprite: {}
 		 * }
 		 * ```
 		 * Where `threshold` is the precision of the raycaster when intersecting objects, in world units.
@@ -58060,11 +58060,11 @@ class SpotLightHelper extends Object3D {
 		const geometry = new BufferGeometry();
 
 		const positions = [
-			0, 0, 0, 	0, 0, 1,
-			0, 0, 0, 	1, 0, 1,
+			0, 0, 0,	0, 0, 1,
+			0, 0, 0,	1, 0, 1,
 			0, 0, 0,	-1, 0, 1,
-			0, 0, 0, 	0, 1, 1,
-			0, 0, 0, 	0, -1, 1
+			0, 0, 0,	0, 1, 1,
+			0, 0, 0,	0, -1, 1
 		];
 
 		for ( let i = 0, j = 1, l = 32; i < l; i ++, j ++ ) {

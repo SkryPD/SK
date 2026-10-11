@@ -18,7 +18,8 @@ export const OUTPUT_DIR = resolve(
 
 const VIEWER_SOURCE_DIR = resolve(ROOT, "src/rooftop3d/viewer");
 const THREE_PACKAGE_DIR = resolve(ROOT, "tools/rooftop3d-web/node_modules/three");
-const LUCIDE_ICON_DIR = resolve(ROOT, "tools/rooftop3d-web/node_modules/lucide-static/icons");
+const LUCIDE_PACKAGE_DIR = resolve(ROOT, "tools/rooftop3d-web/node_modules/lucide-static");
+const LUCIDE_ICON_DIR = resolve(LUCIDE_PACKAGE_DIR, "icons");
 
 async function buildViewer(outDir) {
   const viewerDir = resolve(outDir, "viewer");
@@ -42,6 +43,7 @@ async function buildViewer(outDir) {
     [resolve(THREE_PACKAGE_DIR, "examples/jsm/utils/BufferGeometryUtils.js"), resolve(utilsDir, "BufferGeometryUtils.js")],
     [resolve(THREE_PACKAGE_DIR, "examples/jsm/utils/SkeletonUtils.js"), resolve(utilsDir, "SkeletonUtils.js")],
     [resolve(THREE_PACKAGE_DIR, "LICENSE"), resolve(vendorDir, "THREE-LICENSE.txt")],
+    [resolve(LUCIDE_PACKAGE_DIR, "LICENSE"), resolve(vendorDir, "LUCIDE-LICENSE.txt")],
     [resolve(LUCIDE_ICON_DIR, "maximize.svg"), resolve(iconDir, "maximize.svg")],
     [resolve(LUCIDE_ICON_DIR, "rotate-ccw.svg"), resolve(iconDir, "rotate-ccw.svg")],
     [resolve(LUCIDE_ICON_DIR, "panel-left.svg"), resolve(iconDir, "panel-left.svg")],

@@ -1,10 +1,10 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { basename, join } from "node:path";
+import { basename, join, relative, sep } from "node:path";
 
 import { GLTFExporter } from "../../tools/rooftop3d-web/node_modules/three/examples/jsm/exporters/GLTFExporter.js";
 import { OBJExporter } from "../../tools/rooftop3d-web/node_modules/three/examples/jsm/exporters/OBJExporter.js";
-import { SOURCE_PATH, validateModel } from "./model.mjs";
+import { ROOT, SOURCE_PATH, validateModel } from "./model.mjs";
 import { createThreeScene, MATERIAL_DEFINITIONS } from "./three-scene.mjs";
 
 export function filenamesForModel(model) {
@@ -104,6 +104,7 @@ function objectManifestEntry(object) {
     z_max_mm: object.z_max_mm,
     dimensions_mm: object.dimensions_mm,
     source: object.source,
+    ...object.metadata,
   };
 }
 
@@ -175,7 +176,7 @@ export async function exportUniversalPackage(model, outDir, { sourcePath = SOURC
     source_version: model.source_version,
     candidate_status: model.candidate_status,
     source: {
-      path: sourcePath,
+      path: relative(ROOT, sourcePath).split(sep).join("/"),
       filename: basename(sourcePath),
       sha256: sha256(sourceBytes),
     },

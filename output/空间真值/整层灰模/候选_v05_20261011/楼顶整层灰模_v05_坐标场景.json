@@ -614,7 +614,8 @@
         200,
         3220
       ],
-      "height_mm": 350
+      "height_mm": 350,
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_window_head_wall",
@@ -638,7 +639,8 @@
       "z_mm": 2450,
       "z_max_mm": 3020,
       "former_z_mm": 2750,
-      "resolved_infill_mm": 300
+      "resolved_infill_mm": 300,
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_room_only_window",

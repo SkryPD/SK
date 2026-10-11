@@ -80,8 +80,23 @@ test("universal export writes parseable GLB, millimetre OBJ/MTL and manifest", a
   assert.equal(manifest.resolved_design_decisions[0].new_window_head_mm, 2450);
   assert.deepEqual(manifest.layers.existing_roof_truss.object_ids, []);
   assert.deepEqual(manifest.layers.future_glass_system.object_ids, []);
+  assert.equal(
+    manifest.source.path,
+    "output/空间真值/整层灰模/候选_v05_20261011/楼顶整层灰模_v05_坐标场景.json",
+  );
   assert.equal(manifest.source.sha256.length, 64);
   assert.equal(manifest.objects.find((item) => item.id === "tea_room_floor").kind, "floor_plane");
+  for (const id of [
+    "tea_window_sill_wall",
+    "tea_window_head_wall",
+    "tea_room_only_window",
+  ]) {
+    assert.equal(
+      manifest.objects.find((item) => item.id === id).plan_offset_status,
+      "requires_site_measurement",
+      `${id} manifest entry must preserve its unmeasured plan offset`,
+    );
+  }
   assert.deepEqual(manifest.unhandled_source_objects, []);
 
   for (const file of Object.values(manifest.files)) {

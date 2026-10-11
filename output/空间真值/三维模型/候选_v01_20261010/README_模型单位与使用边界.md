@@ -16,6 +16,7 @@
 | `rooftop_truth_model_v01.mtl` | OBJ 材质表 |
 | `rooftop_truth_model_v01_manifest.json` | 来源、单位、对象、图层、状态、包围盒与哈希清单 |
 | `viewer/index.html` | 本地离线 Three.js 查看器入口 |
+| `viewer/vendor/THREE-LICENSE.txt`、`viewer/vendor/LUCIDE-LICENSE.txt` | 离线查看器第三方依赖许可证 |
 | `01_俯视核验.png` 至 `04_V02-R1核验.png` | 四个固定机位的候选核验截图 |
 | `楼顶通用三维模型_v01_候选核验报告.md` | 自动与视觉核验记录 |
 

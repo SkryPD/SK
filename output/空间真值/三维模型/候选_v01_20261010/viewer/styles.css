@@ -10,6 +10,7 @@
   --brick: #9b5f4c;
   --teal: #3f7670;
   --warning: #ad782b;
+  --resolved: #2f7663;
   --focus: #235f5b;
   --panel-width: 304px;
   font-family: "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
@@ -160,8 +161,13 @@ h1 {
   border-right: 0;
 }
 
-.view-switcher button:nth-last-child(-n + 2) {
+.view-switcher button:last-child {
   border-bottom: 0;
+}
+
+.view-switcher .ceiling-view {
+  grid-column: 1 / -1;
+  border-right: 0;
 }
 
 .view-switcher button:hover {
@@ -279,6 +285,14 @@ h1 {
 .clash-flag b {
   color: var(--warning);
   font-size: 11px;
+}
+
+.clash-flag.is-resolved span {
+  background: var(--resolved);
+}
+
+.clash-flag.is-resolved b {
+  color: var(--resolved);
 }
 
 .panel-footer p {

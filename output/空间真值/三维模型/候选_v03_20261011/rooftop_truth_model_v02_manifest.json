@@ -4,9 +4,9 @@
   "source_version": "rooftop-whole-floor-truth-model-v05",
   "candidate_status": "candidate_window_ceiling_resolved",
   "source": {
-    "path": "C:\\Users\\SkryPD\\Documents\\ChatGPT\\听风径民宿装修方向\\output\\空间真值\\整层灰模\\候选_v05_20261011\\楼顶整层灰模_v05_坐标场景.json",
+    "path": "output/空间真值/整层灰模/候选_v05_20261011/楼顶整层灰模_v05_坐标场景.json",
     "filename": "楼顶整层灰模_v05_坐标场景.json",
-    "sha256": "8bee9f1bb457f0b462d7ad62c930665edca0d28f060cb97d4e6f7a0b795f06be"
+    "sha256": "01caa539619bfc1ca1971bfed3adf3c92b371589d9e65c3eca02580182ca33e1"
   },
   "coordinate_system": {
     "source_units": "millimetres",
@@ -114,7 +114,9 @@
         17390,
         9160
       ],
-      "source": "DWG/PDF plan footprint; retained as the west exterior zone"
+      "source": "DWG/PDF plan footprint; retained as the west exterior zone",
+      "level_mm": 0,
+      "space_type": "exterior"
     },
     {
       "id": "main_hall_floor",
@@ -134,7 +136,10 @@
         12850,
         6160
       ],
-      "source": "DWG/PDF hall shell with owner-controlled east passage start A"
+      "source": "DWG/PDF hall shell with owner-controlled east passage start A",
+      "level_mm": 0,
+      "space_type": "interior",
+      "note": "East edge follows owner A control; not a replacement construction dimension for the historic PDF chain."
     },
     {
       "id": "south_mountain_terrace_band",
@@ -154,7 +159,9 @@
         15780,
         4100
       ],
-      "source": "Plan/site-photo relation: exterior terrace lies beyond the open facade column row"
+      "source": "Plan/site-photo relation: exterior terrace lies beyond the open facade column row",
+      "level_mm": 0,
+      "space_type": "exterior"
     },
     {
       "id": "east_transition_floor",
@@ -174,7 +181,9 @@
         3000,
         6160
       ],
-      "source": "Owner A-B control overlaid on the drawing shell"
+      "source": "Owner A-B control overlaid on the drawing shell",
+      "level_mm": 0,
+      "space_type": "interior_transition"
     },
     {
       "id": "tea_room_floor",
@@ -194,7 +203,9 @@
         3200,
         4100
       ],
-      "source": "Owner-confirmed C-B-D-E tea-room topology retained in v05"
+      "source": "Owner-confirmed C-B-D-E tea-room topology retained in v05",
+      "level_mm": 0,
+      "space_type": "interior"
     },
     {
       "id": "core_toilet",
@@ -211,7 +222,8 @@
       "z_min_mm": 0,
       "z_max_mm": 2700,
       "dimensions_mm": null,
-      "source": "DWG block extents plus page-1 visual review"
+      "source": "DWG block extents plus page-1 visual review",
+      "group": "core"
     },
     {
       "id": "core_stair",
@@ -228,7 +240,8 @@
       "z_min_mm": 0,
       "z_max_mm": 2700,
       "dimensions_mm": null,
-      "source": "DWG block extents plus page-1 visual review"
+      "source": "DWG block extents plus page-1 visual review",
+      "group": "core"
     },
     {
       "id": "core_elevator",
@@ -245,7 +258,8 @@
       "z_min_mm": 0,
       "z_max_mm": 2700,
       "dimensions_mm": null,
-      "source": "DWG block extents plus owner identification of the primary elevator entry"
+      "source": "DWG block extents plus owner identification of the primary elevator entry",
+      "group": "core"
     },
     {
       "id": "bar_operation_zone",
@@ -285,7 +299,8 @@
         200,
         5030
       ],
-      "source": "Owner-confirmed continuous flat background wall; zero opening or recess"
+      "source": "Owner-confirmed continuous flat background wall; zero opening or recess",
+      "opening_count": 0
     },
     {
       "id": "electrical_room_entry",
@@ -300,7 +315,8 @@
         570,
         2150
       ],
-      "source": "T18-T19; entry sits on the side wall and touches the equipment-background-wall corner"
+      "source": "T18-T19; entry sits on the side wall and touches the equipment-background-wall corner",
+      "relation": "side_wall_at_equipment_background_corner"
     },
     {
       "id": "tea_open_passage",
@@ -320,7 +336,10 @@
         3000,
         2700
       ],
-      "source": "T20-T21 plus C04: open passage, no door/frame/wall head"
+      "source": "T20-T21 plus C04: open passage, no door/frame/wall head",
+      "has_door": false,
+      "has_frame": false,
+      "has_lintel_or_wall_head": false
     },
     {
       "id": "tea_bar_shared_wall",
@@ -360,7 +379,8 @@
         200,
         440
       ],
-      "source": "Window length is verified; this jamb display offset remains to be site-measured"
+      "source": "Window length is verified; this jamb display offset remains to be site-measured",
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_window_wall_south_jamb",
@@ -380,7 +400,8 @@
         200,
         440
       ],
-      "source": "Window length is verified; this jamb display offset remains to be site-measured"
+      "source": "Window length is verified; this jamb display offset remains to be site-measured",
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_window_sill_wall",
@@ -400,7 +421,8 @@
         200,
         3220
       ],
-      "source": "T01-T04 and T11 window vertical dimensions"
+      "source": "T01-T04 and T11 window vertical dimensions",
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_window_head_wall",
@@ -420,7 +442,10 @@
         200,
         3220
       ],
-      "source": "Owner-confirmed infill extends the upper wall down to the 2450 finished ceiling"
+      "source": "Owner-confirmed infill extends the upper wall down to the 2450 finished ceiling",
+      "former_z_mm": 2750,
+      "resolved_infill_mm": 300,
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_room_only_window",
@@ -440,7 +465,14 @@
         3220,
         2100
       ],
-      "source": "T01-T04 and T11; display centered only because the opposite-corner offset remains unmeasured"
+      "source": "T01-T04 and T11; display centered only because the opposite-corner offset remains unmeasured",
+      "sill_height_mm": 350,
+      "head_height_mm": 2450,
+      "adjacent_column_clear_mm": 300,
+      "top_to_eave_underside_mm": 570,
+      "former_opening_height_mm": 2400,
+      "upper_infill_mm": 300,
+      "plan_offset_status": "requires_site_measurement"
     },
     {
       "id": "tea_terrace_boundary_wall",
@@ -500,7 +532,8 @@
         3200,
         4100
       ],
-      "source": "C01 revised by owner: the complete tea room uses the 2450 finished ceiling"
+      "source": "C01 revised by owner: the complete tea room uses the 2450 finished ceiling",
+      "coverage": "complete_tea_room_v05_topology"
     },
     {
       "id": "ceiling_level_2_main",
@@ -517,7 +550,8 @@
       "z_min_mm": 2700,
       "z_max_mm": 2700,
       "dimensions_mm": null,
-      "source": "C02 revised by owner: all interior outside the tea room, including the open passage"
+      "source": "C02 revised by owner: all interior outside the tea room, including the open passage",
+      "coverage": "all_interior_except_tea_room"
     },
     {
       "id": "steel_column_c1",
@@ -538,7 +572,13 @@
         150,
         2700
       ],
-      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C"
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
     },
     {
       "id": "steel_column_c2",
@@ -559,7 +599,13 @@
         150,
         2700
       ],
-      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C"
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
     },
     {
       "id": "steel_column_c3",
@@ -580,7 +626,13 @@
         150,
         2700
       ],
-      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C"
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
     },
     {
       "id": "steel_column_c4",
@@ -601,7 +653,13 @@
         150,
         2700
       ],
-      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C"
+      "source": "T14-T17 owner-confirmed four-column/three-bay chain; global embedding derived from confirmed point C",
+      "section_mm": [
+        105,
+        150
+      ],
+      "relative_chain_status": "owner_confirmed",
+      "global_embedding_status": "derived_from_owner_chain_plus_plan_anchor"
     },
     {
       "id": "bar_flip_gate",
@@ -664,7 +722,8 @@
         1000,
         900
       ],
-      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E1"
+      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E1",
+      "equipment_type": "stainless_counter_fridge_1"
     },
     {
       "id": "E2",
@@ -685,7 +744,8 @@
         1000,
         900
       ],
-      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E2"
+      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E2",
+      "equipment_type": "stainless_counter_fridge_2_with_electric_stove"
     },
     {
       "id": "E3",
@@ -706,7 +766,8 @@
         500,
         900
       ],
-      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E3"
+      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E3",
+      "equipment_type": "stainless_blank_worktop"
     },
     {
       "id": "E4",
@@ -727,7 +788,8 @@
         900,
         900
       ],
-      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E4"
+      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E4",
+      "equipment_type": "stainless_sink_with_glass_rinser"
     },
     {
       "id": "E5",
@@ -748,7 +810,8 @@
         1000,
         1800
       ],
-      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E5"
+      "source": "Owner-confirmed modifiable equipment run after electrical-room entry allowance; subdivided by equipment_sequence E5",
+      "equipment_type": "stacked_appliance_rack"
     }
   ],
   "design_clashes": [],
@@ -780,8 +843,8 @@
   "files": {
     "glb": {
       "filename": "rooftop_truth_model_v02.glb",
-      "bytes": 69028,
-      "sha256": "e91ec8dbf5b8e3cf852f9a144276e6c5fd5c012a353c227d8b5380c28ed203a8"
+      "bytes": 69124,
+      "sha256": "7f010a2e07abe327c4def6d09d3bd80925b58db067b0dba9461a4c749494a62a"
     },
     "obj": {
       "filename": "rooftop_truth_model_v02_mm.obj",

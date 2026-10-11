@@ -18,11 +18,12 @@ test("v02 buildPackage creates a fully offline responsive Three.js viewer", asyn
   await buildV02Package(outDir);
 
   const viewerDir = join(outDir, "viewer");
-  const [html, css, app, threeCore] = await Promise.all([
+  const [html, css, app, threeCore, lucideLicense] = await Promise.all([
     readFile(join(viewerDir, "index.html"), "utf8"),
     readFile(join(viewerDir, "styles.css"), "utf8"),
     readFile(join(viewerDir, "app.js"), "utf8"),
     readFile(join(viewerDir, "vendor", "three.core.js"), "utf8"),
+    readFile(join(viewerDir, "vendor", "LUCIDE-LICENSE.txt"), "utf8"),
   ]);
 
   assert.match(html, /id="viewport"/);
@@ -57,6 +58,8 @@ test("v02 buildPackage creates a fully offline responsive Three.js viewer", asyn
   assert.match(app, /V01-R1/);
   assert.match(app, /V02-R1/);
   assert.match(app, /Raycaster/);
+  assert.match(app, /data\.plan_offset_status/);
+  assert.match(app, /平面定位/);
   assert.match(app, /function isObjectVisibleInHierarchy\(object\)/);
   assert.match(app, /item\.object\.userData\.id && isObjectVisibleInHierarchy\(item\.object\)/);
   assert.match(app, /Object\.hasOwn\(LAYER_LABELS, object\.name\)/);
@@ -69,6 +72,8 @@ test("v02 buildPackage creates a fully offline responsive Three.js viewer", asyn
 
   assert.doesNotMatch(`${html}\n${css}\n${app}`, /https?:\/\//);
   assert.doesNotMatch(threeCore, / \t/, "vendored viewer files should pass git whitespace checks");
+  assert.match(lucideLicense, /ISC License/);
+  assert.match(lucideLicense, /Lucide Icons and Contributors/);
   const requiredVendorFiles = [
     "camera.mjs",
     "layers.mjs",
@@ -79,6 +84,7 @@ test("v02 buildPackage creates a fully offline responsive Three.js viewer", asyn
     "utils/BufferGeometryUtils.js",
     "utils/SkeletonUtils.js",
     "vendor/THREE-LICENSE.txt",
+    "vendor/LUCIDE-LICENSE.txt",
     "vendor/icons/maximize.svg",
     "vendor/icons/rotate-ccw.svg",
     "vendor/icons/panel-left.svg",
@@ -93,9 +99,12 @@ test("historical v01 package still emits a v01 viewer target", async (t) => {
 
   const html = await readFile(join(outDir, "viewer", "index.html"), "utf8");
   const threeCore = await readFile(join(outDir, "viewer", "vendor", "three.core.js"), "utf8");
+  const lucideLicense = await readFile(join(outDir, "viewer", "vendor", "LUCIDE-LICENSE.txt"), "utf8");
   assert.match(html, /data-model-version="v01"/);
   assert.match(html, /候选 v01/);
   assert.doesNotMatch(threeCore, / \t/);
+  assert.match(lucideLicense, /ISC License/);
+  assert.match(lucideLicense, /Lucide Icons and Contributors/);
   await access(join(outDir, "rooftop_truth_model_v01.glb"));
   await access(join(outDir, "viewer", "layers.mjs"));
 });
